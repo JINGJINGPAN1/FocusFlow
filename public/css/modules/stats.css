@@ -1,0 +1,89 @@
+.stats-subtitle {
+  color: var(--text-sub);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--accent-soft);
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stat-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 12px;
+  color: var(--text-sub);
+  font-size: 24px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.recent-sessions {
+  background: var(--accent-soft);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.recent-sessions-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.recent-sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.session-item {
+  background: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.session-date {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.session-details {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.recent-sessions-empty {
+  text-align: center;
+  color: var(--text-sub);
+  font-size: 14px;
+  padding: 40px 0;
+}

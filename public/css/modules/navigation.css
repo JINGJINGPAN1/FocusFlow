@@ -1,0 +1,36 @@
+.top-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-tab:hover {
+  background: var(--nav-active-bg);
+}
+
+.nav-tab.active {
+  background: var(--nav-active-bg);
+  color: var(--text-main);
+  border: 1px solid var(--nav-border);
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}

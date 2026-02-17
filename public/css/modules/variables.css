@@ -1,0 +1,12 @@
+:root {
+  --bg-color: #f8f9fd;
+  --card-bg: #ffffff;
+  --primary-purple: #7262b8;
+  --text-main: #333333;
+  --text-sub: #8e8e93;
+  --accent-soft: #ebe9f5;
+  --nav-active-bg: #f5f5f7;
+  --nav-border: #e5e5ea;
+  --error-color: #ff3b30;
+  --success-color: #34c759;
+}
