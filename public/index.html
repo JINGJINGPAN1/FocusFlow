@@ -55,7 +55,36 @@
           </button>
         </div>
 
-        <ul class="todo-list" id="todoList"></ul>
+        <div class="tasks-by-period" id="tasksByPeriod">
+          <section class="period-section" data-period="anytime">
+            <div class="period-section-header">
+              <h3 class="period-title">Anytime</h3>
+              <button class="section-add-btn" data-period="anytime" title="Add task">+</button>
+            </div>
+            <ul class="todo-list" data-period="anytime"></ul>
+          </section>
+          <section class="period-section" data-period="morning">
+            <div class="period-section-header">
+              <h3 class="period-title">Morning</h3>
+              <button class="section-add-btn" data-period="morning" title="Add task">+</button>
+            </div>
+            <ul class="todo-list" data-period="morning"></ul>
+          </section>
+          <section class="period-section" data-period="afternoon">
+            <div class="period-section-header">
+              <h3 class="period-title">Afternoon</h3>
+              <button class="section-add-btn" data-period="afternoon" title="Add task">+</button>
+            </div>
+            <ul class="todo-list" data-period="afternoon"></ul>
+          </section>
+          <section class="period-section" data-period="evening">
+            <div class="period-section-header">
+              <h3 class="period-title">Evening</h3>
+              <button class="section-add-btn" data-period="evening" title="Add task">+</button>
+            </div>
+            <ul class="todo-list" data-period="evening"></ul>
+          </section>
+        </div>
       </div>
     </div>
 
@@ -182,6 +211,15 @@
         <div class="form-group">
           <label for="taskText">Task Description</label>
           <input type="text" id="taskText" name="text" placeholder="Enter task description" required />
+        </div>
+        <div class="form-group">
+          <label for="taskPeriod">Time of Day</label>
+          <select id="taskPeriod" name="period">
+            <option value="anytime">Anytime</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+          </select>
         </div>
         <div class="form-actions">
           <button type="button" class="btn-secondary" id="cancelBtn">

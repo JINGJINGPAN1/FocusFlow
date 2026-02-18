@@ -1,5 +1,7 @@
 import * as api from './api.js';
 
+const PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
+
 let tasks = [];
 let currentFilter = 'all';
 
@@ -32,9 +34,20 @@ function setupEventListeners() {
   const closeModal = document.getElementById('closeModal');
   const cancelBtn = document.getElementById('cancelBtn');
   const filterItems = document.querySelectorAll('.filter-item');
+  const sectionAddBtns = document.querySelectorAll('.section-add-btn');
 
-  addTaskBtn?.addEventListener('click', () => {
+  const openModal = (preselectedPeriod = 'anytime') => {
+    const periodSelect = document.getElementById('taskPeriod');
+    if (periodSelect) periodSelect.value = preselectedPeriod;
     document.getElementById('taskModal').style.display = 'flex';
+  };
+
+  addTaskBtn?.addEventListener('click', () => openModal());
+
+  sectionAddBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      openModal(btn.dataset.period || 'anytime');
+    });
   });
 
   closeModal?.addEventListener('click', closeTaskModal);
@@ -44,9 +57,10 @@ function setupEventListeners() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const text = formData.get('text');
+    const period = formData.get('period') || 'anytime';
 
     try {
-      await api.createTask({ text });
+      await api.createTask({ text, period });
       closeTaskModal();
       await loadTasks();
       e.target.reset();
@@ -81,9 +95,6 @@ async function loadTasks() {
 }
 
 function renderTasks() {
-  const list = document.getElementById('todoList');
-  if (!list) return;
-
   let filteredTasks = tasks;
   if (currentFilter === 'active') {
     filteredTasks = tasks.filter((t) => !t.completed);
@@ -91,36 +102,47 @@ function renderTasks() {
     filteredTasks = tasks.filter((t) => t.completed);
   }
 
-  list.innerHTML = '';
+  PERIODS.forEach((period) => {
+    const list = document.querySelector(`.todo-list[data-period="${period}"]`);
+    if (!list) return;
 
-  if (filteredTasks.length === 0) {
-    list.innerHTML = '<li class="empty-state">No tasks found</li>';
-    updateTaskCounts();
-    return;
-  }
+    const periodTasks = filteredTasks.filter(
+      (t) => (t.period || 'anytime') === period
+    );
 
-  filteredTasks.forEach((task) => {
-    const li = document.createElement('li');
-    li.className = 'todo-item';
-    li.setAttribute('data-status', task.completed ? 'completed' : 'active');
-    li.innerHTML = `
-      <input type="checkbox" class="todo-checkbox" ${
-        task.completed ? 'checked' : ''
-      } data-task-id="${task._id}">
-      <span class="todo-text">${escapeHtml(task.text)}</span>
-      <div class="todo-actions">
-        <button class="action-btn" data-task-id="${
-          task._id
-        }" title="Start focus session">▶</button>
-        <button class="action-btn edit" data-task-id="${
-          task._id
-        }" title="Edit task">✎</button>
-        <button class="action-btn delete" data-task-id="${
-          task._id
-        }" title="Delete task">🗑</button>
-      </div>
-    `;
-    list.appendChild(li);
+    list.innerHTML = '';
+
+    if (periodTasks.length === 0) {
+      list.innerHTML = `
+        <li class="period-empty-placeholder">
+          <span class="placeholder-text">No tasks yet</span>
+        </li>
+      `;
+    } else {
+      periodTasks.forEach((task) => {
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.setAttribute('data-status', task.completed ? 'completed' : 'active');
+        li.innerHTML = `
+          <input type="checkbox" class="todo-checkbox" ${
+            task.completed ? 'checked' : ''
+          } data-task-id="${task._id}">
+          <span class="todo-text">${escapeHtml(task.text)}</span>
+          <div class="todo-actions">
+            <button class="action-btn" data-task-id="${
+              task._id
+            }" title="Start focus session">▶</button>
+            <button class="action-btn edit" data-task-id="${
+              task._id
+            }" title="Edit task">✎</button>
+            <button class="action-btn delete" data-task-id="${
+              task._id
+            }" title="Delete task">🗑</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
   });
 
   attachTaskEventListeners();

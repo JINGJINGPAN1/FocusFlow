@@ -67,6 +67,67 @@
   text-underline-offset: 8px;
 }
 
+.tasks-by-period {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.period-section {
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.period-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.period-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.section-add-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--nav-border);
+  background: var(--card-bg);
+  color: var(--text-sub);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.section-add-btn:hover {
+  background: var(--primary-purple);
+  color: white;
+  border-color: var(--primary-purple);
+}
+
+.period-empty-placeholder {
+  list-style: none;
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px dashed var(--nav-border);
+  border-radius: 12px;
+  background: transparent;
+}
+
+.period-empty-placeholder .placeholder-text {
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
 .todo-list {
   list-style: none;
 }

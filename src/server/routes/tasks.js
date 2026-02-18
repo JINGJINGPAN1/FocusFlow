@@ -35,19 +35,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+const VALID_PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
+
 // POST create a new task
 router.post('/', async (req, res) => {
   try {
-    const { text, completed = false } = req.body;
+    const { text, completed = false, period = 'anytime' } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim() === '') {
       return res.status(400).json({ error: 'Task text is required' });
     }
 
+    const taskPeriod = VALID_PERIODS.includes(period) ? period : 'anytime';
+
     const tasksCollection = getCollection('tasks');
     const newTask = {
       text: text.trim(),
       completed: Boolean(completed),
+      period: taskPeriod,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -72,6 +77,12 @@ router.put('/:id', async (req, res) => {
     const updateData = {
       updatedAt: new Date(),
     };
+
+    if (req.body.period !== undefined) {
+      updateData.period = VALID_PERIODS.includes(req.body.period)
+        ? req.body.period
+        : 'anytime';
+    }
 
     if (text !== undefined) {
       if (typeof text !== 'string' || text.trim() === '') {
