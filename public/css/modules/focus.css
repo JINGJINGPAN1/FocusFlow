@@ -136,6 +136,97 @@
   font-size: 14px;
 }
 
+/* --- SESSION COMPLETE VIEW --- */
+.focus-complete-wrapper {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.focus-complete-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(52, 199, 89, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(52, 199, 89, 0.15);
+  max-width: 360px;
+  width: 100%;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.focus-complete-wrapper.focus-complete-visible .focus-complete-card {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.focus-complete-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #34c759 0%, #30d158 100%);
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 4px 16px rgba(52, 199, 89, 0.35);
+}
+
+.focus-complete-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.focus-complete-time {
+  font-size: 48px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--success-color);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.focus-complete-subtitle {
+  font-size: 15px;
+  color: var(--text-sub);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.focus-complete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--success-color);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.focus-complete-btn:hover {
+  opacity: 0.9;
+}
+
+.focus-complete-btn:active {
+  transform: scale(0.98);
+}
+
 /* --- FOCUS MUSIC PAGE --- */
 .player-wrapper {
   position: relative;

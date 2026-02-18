@@ -59,6 +59,10 @@ function setupFocusStartControls() {
     }
     startFocusSession(null, 'Focus Session', minutes);
   });
+
+  document.getElementById('focusStartAgainBtn')?.addEventListener('click', () => {
+    resetSession();
+  });
 }
 
 function initWhiteNoise() {
@@ -218,15 +222,15 @@ async function completeSession() {
   if (playBtn) playBtn.textContent = '▶';
   if (playerWrapper) playerWrapper.classList.remove('is-playing');
 
+  const actualDurationSeconds = totalDuration - remainingSeconds;
+
   if (currentSession) {
     try {
-      const actualDuration = totalDuration - remainingSeconds;
       await api.updateSession(currentSession._id, {
         completed: true,
-        duration: actualDuration,
+        duration: actualDurationSeconds,
       });
-      alert('Focus session completed! Great job!');
-      resetSession();
+      showCompleteView(actualDurationSeconds);
       if (window.updateStats) {
         window.updateStats();
       }
@@ -234,15 +238,13 @@ async function completeSession() {
       console.error('Error completing session:', error);
     }
   } else {
-    // If session wasn't created yet, create it as completed (works for both task and general focus)
     try {
       await api.createSession({
         taskId: currentTaskId,
-        duration: totalDuration - remainingSeconds,
+        duration: actualDurationSeconds,
         completed: true,
       });
-      alert('Focus session completed! Great job!');
-      resetSession();
+      showCompleteView(actualDurationSeconds);
       if (window.updateStats) {
         window.updateStats();
       }
@@ -250,6 +252,44 @@ async function completeSession() {
       console.error('Error completing session:', error);
     }
   }
+}
+
+function showCompleteView(completedSeconds) {
+  stopProgress();
+  stopWhiteNoise();
+
+  currentSession = null;
+  isPlaying = false;
+  currentTaskId = null;
+  currentTaskName = '';
+  audioLoopCount = 0;
+
+  const playBtn = document.getElementById('masterPlayBtn');
+  const playerWrapper = document.getElementById('playerWrapper');
+  if (playBtn) playBtn.textContent = '▶';
+  if (playerWrapper) playerWrapper.classList.remove('is-playing');
+
+  const mins = Math.floor(completedSeconds / 60);
+  const secs = completedSeconds % 60;
+  const timeDisplay = secs > 0
+    ? `${mins} min ${secs} sec`
+    : mins === 1
+      ? '1 min'
+      : `${mins} min`;
+  const subtitleText = mins === 1 && secs === 0
+    ? 'You focused for 1 minute'
+    : secs > 0
+      ? `You focused for ${mins} minutes ${secs} seconds`
+      : `You focused for ${mins} minutes`;
+
+  document.getElementById('noSessionView').style.display = 'none';
+  document.getElementById('focusMusicView').style.display = 'none';
+  const completeView = document.getElementById('focusCompleteView');
+  completeView.style.display = 'flex';
+  document.getElementById('focusCompletedTime').textContent = timeDisplay;
+  document.getElementById('focusCompletedSubtitle').textContent = subtitleText;
+  completeView.offsetHeight; // trigger reflow for animation
+  completeView.classList.add('focus-complete-visible');
 }
 
 export async function deleteSession() {
@@ -283,6 +323,9 @@ function resetSession() {
 
   document.getElementById('noSessionView').style.display = 'block';
   document.getElementById('focusMusicView').style.display = 'none';
+  const completeView = document.getElementById('focusCompleteView');
+  completeView.style.display = 'none';
+  completeView.classList.remove('focus-complete-visible');
   updateProgress();
 }
 
