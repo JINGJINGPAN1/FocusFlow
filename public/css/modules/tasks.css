@@ -1,8 +1,15 @@
 /* Date header - Tiimo-style productivity app */
 .tasks-date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 28px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--nav-border);
+}
+
+.tasks-date-left {
+  flex: 1;
 }
 
 .tasks-weekday {
@@ -19,6 +26,57 @@
   color: var(--text-sub);
   font-weight: 400;
   letter-spacing: 0.3px;
+}
+
+/* Daily Progress Ring - right side of date header */
+.daily-progress-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.progress-ring-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.progress-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #e8e8ed;
+  stroke-width: 8;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: var(--primary-purple);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: 326.7;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.progress-ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.progress-ring-label {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-sub);
+  font-weight: 500;
 }
 
 .add-task-btn {

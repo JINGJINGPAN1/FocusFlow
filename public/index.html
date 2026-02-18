@@ -30,9 +30,22 @@
     <div id="tasksPage" class="page active">
       <div class="glass-card">
         <header class="tasks-date-header">
-          <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
-          <p class="tasks-date" id="tasksDate">Feb 17, 2026</p>
+          <div class="tasks-date-left">
+            <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
+            <p class="tasks-date" id="tasksDate">Feb 17, 2026</p>
+          </div>
+          <div class="daily-progress-ring">
+            <div class="progress-ring-wrapper">
+              <svg class="progress-ring-svg" viewBox="0 0 120 120" width="80" height="80">
+                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                <circle class="progress-ring-fill" cx="60" cy="60" r="52" id="progressRingFill" />
+              </svg>
+              <span class="progress-ring-text" id="progressRingPercent">0%</span>
+            </div>
+            <p class="progress-ring-label" id="progressRingLabel">0 / 0 tasks</p>
+          </div>
         </header>
+
         <div class="page-header">
           <div>
             <h1>Tasks</h1>

@@ -359,6 +359,28 @@ function updateTaskCounts() {
   if (allCountEl) allCountEl.textContent = all;
   if (activeCountEl) activeCountEl.textContent = active;
   if (completedCountEl) completedCountEl.textContent = completed;
+
+  updateProgressRing();
+}
+
+function updateProgressRing() {
+  const total = tasks.length;
+  const completed = tasks.filter((t) => t.completed).length;
+  const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  const percentEl = document.getElementById('progressRingPercent');
+  const labelEl = document.getElementById('progressRingLabel');
+  const fillEl = document.getElementById('progressRingFill');
+
+  if (percentEl) percentEl.textContent = `${percent}%`;
+  if (labelEl) labelEl.textContent = `${completed} / ${total} tasks`;
+
+  if (fillEl) {
+    const radius = 52;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (circumference * (completed / total));
+    fillEl.style.strokeDashoffset = total > 0 ? offset : circumference;
+  }
 }
 
 function escapeHtml(text) {
