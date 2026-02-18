@@ -200,6 +200,20 @@ function renderTasks() {
 
   attachTaskEventListeners();
   updateTaskCounts();
+  updatePeriodProgress();
+}
+
+function updatePeriodProgress() {
+  PERIODS.forEach((period) => {
+    const periodTasks = tasks.filter((t) => (t.period || 'anytime') === period);
+    const completed = periodTasks.filter((t) => t.completed).length;
+    const total = periodTasks.length;
+
+    const progressEl = document.querySelector(
+      `.period-progress[data-period="${period}"]`
+    );
+    if (progressEl) progressEl.textContent = `${completed} / ${total}`;
+  });
 }
 
 function attachTaskEventListeners() {
