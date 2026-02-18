@@ -53,14 +53,17 @@ function setupEventListeners() {
   closeModal?.addEventListener('click', closeTaskModal);
   cancelBtn?.addEventListener('click', closeTaskModal);
 
+  setupDurationSelector();
+
   taskForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const text = formData.get('text');
     const period = formData.get('period') || 'anytime';
+    const duration = parseInt(document.getElementById('taskDuration').value, 10) || 25;
 
     try {
-      await api.createTask({ text, period });
+      await api.createTask({ text, period, duration });
       closeTaskModal();
       await loadTasks();
       e.target.reset();
@@ -79,9 +82,53 @@ function setupEventListeners() {
   });
 }
 
+const DURATION_MIN = 5;
+const DURATION_MAX = 180;
+const DURATION_STEP = 5;
+const DURATION_DEFAULT = 25;
+
+function setupDurationSelector() {
+  const minusBtn = document.getElementById('durationMinus');
+  const plusBtn = document.getElementById('durationPlus');
+  const displayEl = document.getElementById('durationDisplay');
+  const hiddenInput = document.getElementById('taskDuration');
+
+  const updateDuration = (value) => {
+    const clamped = Math.max(DURATION_MIN, Math.min(DURATION_MAX, value));
+    if (hiddenInput) hiddenInput.value = clamped;
+    if (displayEl) displayEl.textContent = `${clamped} min`;
+    if (minusBtn) minusBtn.disabled = clamped <= DURATION_MIN;
+    if (plusBtn) plusBtn.disabled = clamped >= DURATION_MAX;
+  };
+
+  minusBtn?.addEventListener('click', () => {
+    const current = parseInt(hiddenInput?.value || DURATION_DEFAULT, 10);
+    updateDuration(current - DURATION_STEP);
+  });
+
+  plusBtn?.addEventListener('click', () => {
+    const current = parseInt(hiddenInput?.value || DURATION_DEFAULT, 10);
+    updateDuration(current + DURATION_STEP);
+  });
+
+  updateDuration(parseInt(hiddenInput?.value || DURATION_DEFAULT, 10));
+}
+
 function closeTaskModal() {
   document.getElementById('taskModal').style.display = 'none';
   document.getElementById('taskForm').reset();
+  resetDurationSelector();
+}
+
+function resetDurationSelector() {
+  const hiddenInput = document.getElementById('taskDuration');
+  const displayEl = document.getElementById('durationDisplay');
+  const minusBtn = document.getElementById('durationMinus');
+  const plusBtn = document.getElementById('durationPlus');
+  if (hiddenInput) hiddenInput.value = DURATION_DEFAULT;
+  if (displayEl) displayEl.textContent = `${DURATION_DEFAULT} min`;
+  if (minusBtn) minusBtn.disabled = false;
+  if (plusBtn) plusBtn.disabled = false;
 }
 
 async function loadTasks() {
@@ -123,11 +170,17 @@ function renderTasks() {
         const li = document.createElement('li');
         li.className = 'todo-item';
         li.setAttribute('data-status', task.completed ? 'completed' : 'active');
+        const durationHtml = task.duration
+          ? `<span class="todo-duration">${task.duration} min</span>`
+          : '';
         li.innerHTML = `
           <input type="checkbox" class="todo-checkbox" ${
             task.completed ? 'checked' : ''
           } data-task-id="${task._id}">
-          <span class="todo-text">${escapeHtml(task.text)}</span>
+          <div class="todo-content">
+            <span class="todo-text">${escapeHtml(task.text)}</span>
+            ${durationHtml}
+          </div>
           <div class="todo-actions">
             <button class="action-btn" data-task-id="${
               task._id

@@ -156,9 +156,21 @@
   flex-shrink: 0;
 }
 
-.todo-text {
+.todo-content {
   flex: 1;
+  min-width: 0;
+}
+
+.todo-text {
+  display: block;
   font-size: 15px;
+}
+
+.todo-duration {
+  display: block;
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-top: 2px;
 }
 
 .todo-actions {

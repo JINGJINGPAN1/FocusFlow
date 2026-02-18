@@ -40,19 +40,28 @@ const VALID_PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
 // POST create a new task
 router.post('/', async (req, res) => {
   try {
-    const { text, completed = false, period = 'anytime' } = req.body;
+    const { text, completed = false, period = 'anytime', duration } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim() === '') {
       return res.status(400).json({ error: 'Task text is required' });
     }
 
     const taskPeriod = VALID_PERIODS.includes(period) ? period : 'anytime';
+    const parsedDuration =
+      duration !== undefined && duration !== '' && duration !== null
+        ? parseInt(duration, 10)
+        : NaN;
+    const taskDuration =
+      !isNaN(parsedDuration) && parsedDuration > 0
+        ? Math.max(5, Math.min(180, parsedDuration))
+        : 25;
 
     const tasksCollection = getCollection('tasks');
     const newTask = {
       text: text.trim(),
       completed: Boolean(completed),
       period: taskPeriod,
+      duration: taskDuration,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -95,9 +104,22 @@ router.put('/:id', async (req, res) => {
       updateData.completed = Boolean(completed);
     }
 
+    const updateObj = { $set: updateData };
+    if (
+      req.body.duration !== undefined &&
+      (req.body.duration === '' || req.body.duration === null)
+    ) {
+      updateObj.$unset = { duration: '' };
+    } else if (req.body.duration !== undefined) {
+      const d = parseInt(req.body.duration, 10);
+      if (!isNaN(d)) {
+        updateData.duration = Math.max(5, Math.min(180, d));
+      }
+    }
+
     const result = await tasksCollection.updateOne(
       { _id: new ObjectId(req.params.id) },
-      { $set: updateData }
+      updateObj
     );
 
     if (result.matchedCount === 0) {

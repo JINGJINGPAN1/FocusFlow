@@ -81,6 +81,48 @@
   appearance: auto;
 }
 
+.duration-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.duration-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--nav-border);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 22px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.duration-btn:hover:not(:disabled) {
+  background: var(--primary-purple);
+  color: white;
+  border-color: var(--primary-purple);
+}
+
+.duration-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.duration-display {
+  min-width: 72px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
 .period-radio-group {
   display: flex;
   flex-wrap: wrap;
