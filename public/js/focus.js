@@ -8,8 +8,6 @@ let isPlaying = false;
 let currentTaskId = null;
 let currentTaskName = '';
 let volume = 70;
-let isShuffle = false;
-let isRepeat = false;
 let whiteNoiseAudio = null;
 let audioLoopCount = 0;
 
@@ -94,17 +92,9 @@ function handleAudioEnded() {
 
 function setupEventListeners() {
   const playBtn = document.getElementById('masterPlayBtn');
-  const shuffleBtn = document.getElementById('shuffleBtn');
-  const repeatBtn = document.getElementById('repeatBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
   const volumeSlider = document.getElementById('volumeSlider');
 
   playBtn?.addEventListener('click', togglePlay);
-  shuffleBtn?.addEventListener('click', toggleShuffle);
-  repeatBtn?.addEventListener('click', toggleRepeat);
-  prevBtn?.addEventListener('click', previousTrack);
-  nextBtn?.addEventListener('click', nextTrack);
   volumeSlider?.addEventListener('click', setVolume);
 }
 
@@ -192,11 +182,7 @@ function startProgress() {
       updateProgress();
 
       if (remainingSeconds === 0) {
-        if (isRepeat) {
-          remainingSeconds = totalDuration;
-        } else {
-          completeSession();
-        }
+        completeSession();
       }
     }
   }, 1000);
@@ -306,29 +292,6 @@ function updateProgress() {
   const remainingSecs = remainingSeconds % 60;
   if (countdownEl) {
     countdownEl.textContent = `${remainingMins}:${remainingSecs.toString().padStart(2, '0')}`;
-  }
-}
-
-function toggleShuffle() {
-  isShuffle = !isShuffle;
-  // Visual feedback can be added here
-}
-
-function toggleRepeat() {
-  isRepeat = !isRepeat;
-  // Visual feedback can be added here
-}
-
-function previousTrack() {
-  remainingSeconds = totalDuration;
-  updateProgress();
-}
-
-function nextTrack() {
-  remainingSeconds = 0;
-  updateProgress();
-  if (isPlaying) {
-    completeSession();
   }
 }
 
