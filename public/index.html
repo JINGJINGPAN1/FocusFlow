@@ -1,198 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FocusFlow - Task & Focus Management</title>
-    <link rel="stylesheet" href="/css/main.css" />
-  </head>
-  <body>
-    <div class="container">
-      <!-- Top Navigation -->
-      <nav class="top-nav">
-        <button class="nav-tab active" data-page="tasks">
-          <span class="nav-icon">📋</span>
-          <span>Tasks</span>
-        </button>
-        <button class="nav-tab" data-page="focus">
-          <span class="nav-icon">⏱</span>
-          <span>Focus</span>
-        </button>
-        <button class="nav-tab" data-page="stats">
-          <span class="nav-icon">📊</span>
-          <span>Stats</span>
-        </button>
-      </nav>
 
-      <!-- Tasks Page -->
-      <div id="tasksPage" class="page active">
-        <div class="glass-card">
-          <div class="page-header">
-            <div>
-              <h1>Tasks</h1>
-            </div>
-            <button class="add-task-btn" id="addTaskBtn">
-              <span>+</span>
-              <span>Add Task</span>
-            </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusFlow - Task & Focus Management</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <button class="nav-tab active" data-page="tasks">
+        <span class="nav-icon">📋</span>
+        <span>Tasks</span>
+      </button>
+      <button class="nav-tab" data-page="focus">
+        <span class="nav-icon">⏱</span>
+        <span>Focus</span>
+      </button>
+      <button class="nav-tab" data-page="stats">
+        <span class="nav-icon">📊</span>
+        <span>Stats</span>
+      </button>
+    </nav>
+
+    <!-- Tasks Page -->
+    <div id="tasksPage" class="page active">
+      <div class="glass-card">
+        <header class="tasks-date-header">
+          <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
+          <p class="tasks-date" id="tasksDate">Feb 17, 2026</p>
+        </header>
+        <div class="page-header">
+          <div>
+            <h1>Tasks</h1>
           </div>
-
-          <div class="filter-nav">
-            <button class="filter-item active" data-filter="all">
-              All (<span id="allCount">0</span>)
-            </button>
-            <button class="filter-item" data-filter="active">
-              Active (<span id="activeCount">0</span>)
-            </button>
-            <button class="filter-item" data-filter="completed">
-              Completed (<span id="completedCount">0</span>)
-            </button>
-          </div>
-
-          <ul class="todo-list" id="todoList"></ul>
+          <button class="add-task-btn" id="addTaskBtn">
+            <span>+</span>
+            <span>Add Task</span>
+          </button>
         </div>
+
+        <div class="filter-nav">
+          <button class="filter-item active" data-filter="all">
+            All (<span id="allCount">0</span>)
+          </button>
+          <button class="filter-item" data-filter="active">
+            Active (<span id="activeCount">0</span>)
+          </button>
+          <button class="filter-item" data-filter="completed">
+            Completed (<span id="completedCount">0</span>)
+          </button>
+        </div>
+
+        <ul class="todo-list" id="todoList"></ul>
       </div>
+    </div>
 
-      <!-- Focus Page -->
-      <div id="focusPage" class="page">
-        <div class="glass-card">
-          <div id="noSessionView">
-            <div class="no-session-card">
-              <div class="play-icon-large"></div>
-              <div class="no-session-title">No Active Focus Session</div>
-              <div class="no-session-text">
-                Select a task and click the play button to start a focus session
-              </div>
-            </div>
-          </div>
-
-          <!-- Music view -->
-          <div id="focusMusicView" style="display: none">
-            <!-- Hidden audio element for white noise playback -->
-            <audio id="whiteNoiseAudio">
-              <source src="/white_noise/39-Rain-60min.mp3" type="audio/mpeg" />
-            </audio>
-
-            <h2 style="text-align: center; margin-bottom: 8px">Focus Music</h2>
-            <p class="sub-header" style="text-align: center; margin-bottom: 24px">
-              Play music to help you concentrate
-            </p>
-
-            <div class="player-wrapper" id="playerWrapper">
-              <div class="tonearm"></div>
-              <div class="vinyl-record">
-                <div class="album-art"></div>
-              </div>
-            </div>
-
-            <div class="pagination-dots">
-              <span class="dot"></span>
-              <span class="dot active"></span>
-              <span class="dot"></span>
-            </div>
-
-            <div class="track-info">
-              <div class="track-title" id="currentTaskName">No task selected</div>
-              <div class="track-artist">Focus Session</div>
-              <div class="track-album">Stay Focused</div>
-            </div>
-
-            <div class="progress-bar-wrapper">
-              <span class="time-display" id="currentTime">0:00</span>
-              <div class="progress-bar" id="progressBar">
-                <div class="progress-fill" id="progressFill"></div>
-                <div class="progress-handle" id="progressHandle"></div>
-              </div>
-              <span class="time-display" id="totalTime">25:00</span>
-            </div>
-
-            <div class="playback-controls">
-              <button class="control-btn" id="shuffleBtn">🔀</button>
-              <button class="control-btn" id="prevBtn">⏮</button>
-              <button class="play-btn" id="masterPlayBtn">▶</button>
-              <button class="control-btn" id="nextBtn">⏭</button>
-              <button class="control-btn" id="repeatBtn">🔁</button>
-            </div>
-
-            <div class="volume-control">
-              <span class="nav-icon">🔊</span>
-              <div class="volume-slider-wrapper" id="volumeSlider">
-                <div class="volume-fill" id="volumeFill"></div>
-                <div class="volume-handle" id="volumeHandle"></div>
-              </div>
-              <span class="volume-percent" id="volumePercent">70%</span>
+    <!-- Focus Page -->
+    <div id="focusPage" class="page">
+      <div class="glass-card">
+        <div id="noSessionView">
+          <div class="no-session-card">
+            <div class="play-icon-large"></div>
+            <div class="no-session-title">No Active Focus Session</div>
+            <div class="no-session-text">
+              Select a task and click the play button to start a focus session
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Stats Page -->
-      <div id="statsPage" class="page">
-        <div class="glass-card">
-          <h1>Statistics</h1>
-          <p class="stats-subtitle">
-            Track your productivity and focus time
+        <!-- Music view -->
+        <div id="focusMusicView" style="display: none">
+          <!-- Hidden audio element for white noise playback -->
+          <audio id="whiteNoiseAudio">
+            <source src="/white_noise/39-Rain-60min.mp3" type="audio/mpeg" />
+          </audio>
+
+          <h2 style="text-align: center; margin-bottom: 8px">Focus Music</h2>
+          <p class="sub-header" style="text-align: center; margin-bottom: 24px">
+            Play music to help you concentrate
           </p>
 
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-icon">🎯</div>
-              <div class="stat-value" id="sessionsToday">0</div>
-              <div class="stat-label">Sessions Today</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon">⏰</div>
-              <div class="stat-value" id="totalMinutes">0</div>
-              <div class="stat-label">Total Minutes</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon">📈</div>
-              <div class="stat-value" id="pomodoros">0</div>
-              <div class="stat-label">Pomodoros</div>
+          <div class="player-wrapper" id="playerWrapper">
+            <div class="tonearm"></div>
+            <div class="vinyl-record">
+              <div class="album-art"></div>
             </div>
           </div>
 
-          <div class="recent-sessions">
-            <div class="recent-sessions-header">
-              <span class="nav-icon">📅</span>
-              <span>Recent Sessions</span>
+          <div class="pagination-dots">
+            <span class="dot"></span>
+            <span class="dot active"></span>
+            <span class="dot"></span>
+          </div>
+
+          <div class="track-info">
+            <div class="track-title" id="currentTaskName">No task selected</div>
+            <div class="track-artist">Focus Session</div>
+            <div class="track-album">Stay Focused</div>
+          </div>
+
+          <div class="progress-bar-wrapper">
+            <span class="time-display" id="currentTime">0:00</span>
+            <div class="progress-bar" id="progressBar">
+              <div class="progress-fill" id="progressFill"></div>
+              <div class="progress-handle" id="progressHandle"></div>
             </div>
-            <div id="recentSessionsContent" class="recent-sessions-list">
-              Loading...
+            <span class="time-display" id="totalTime">25:00</span>
+          </div>
+
+          <div class="playback-controls">
+            <button class="control-btn" id="shuffleBtn">🔀</button>
+            <button class="control-btn" id="prevBtn">⏮</button>
+            <button class="play-btn" id="masterPlayBtn">▶</button>
+            <button class="control-btn" id="nextBtn">⏭</button>
+            <button class="control-btn" id="repeatBtn">🔁</button>
+          </div>
+
+          <div class="volume-control">
+            <span class="nav-icon">🔊</span>
+            <div class="volume-slider-wrapper" id="volumeSlider">
+              <div class="volume-fill" id="volumeFill"></div>
+              <div class="volume-handle" id="volumeHandle"></div>
             </div>
+            <span class="volume-percent" id="volumePercent">70%</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Add Task Modal -->
-    <div id="taskModal" class="modal" style="display: none">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Add New Task</h2>
-          <button class="modal-close" id="closeModal">&times;</button>
+    <!-- Stats Page -->
+    <div id="statsPage" class="page">
+      <div class="glass-card">
+        <h1>Statistics</h1>
+        <p class="stats-subtitle">
+          Track your productivity and focus time
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value" id="sessionsToday">0</div>
+            <div class="stat-label">Sessions Today</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏰</div>
+            <div class="stat-value" id="totalMinutes">0</div>
+            <div class="stat-label">Total Minutes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value" id="pomodoros">0</div>
+            <div class="stat-label">Pomodoros</div>
+          </div>
         </div>
-        <form id="taskForm">
-          <div class="form-group">
-            <label for="taskText">Task Description</label>
-            <input
-              type="text"
-              id="taskText"
-              name="text"
-              placeholder="Enter task description"
-              required
-            />
+
+        <div class="recent-sessions">
+          <div class="recent-sessions-header">
+            <span class="nav-icon">📅</span>
+            <span>Recent Sessions</span>
           </div>
-          <div class="form-actions">
-            <button type="button" class="btn-secondary" id="cancelBtn">
-              Cancel
-            </button>
-            <button type="submit" class="btn-primary">Add Task</button>
+          <div id="recentSessionsContent" class="recent-sessions-list">
+            Loading...
           </div>
-        </form>
+        </div>
       </div>
     </div>
+  </div>
 
-    <script type="module" src="/js/main.js"></script>
-  </body>
+  <!-- Add Task Modal -->
+  <div id="taskModal" class="modal" style="display: none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Task</h2>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <form id="taskForm">
+        <div class="form-group">
+          <label for="taskText">Task Description</label>
+          <input type="text" id="taskText" name="text" placeholder="Enter task description" required />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelBtn">
+            Cancel
+          </button>
+          <button type="submit" class="btn-primary">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+
 </html>

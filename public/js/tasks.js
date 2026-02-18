@@ -4,8 +4,26 @@ let tasks = [];
 let currentFilter = 'all';
 
 export function initTasks() {
+  updateDateHeader();
   loadTasks();
   setupEventListeners();
+}
+
+function updateDateHeader() {
+  const now = new Date();
+  const weekdayEl = document.getElementById('tasksWeekday');
+  const dateEl = document.getElementById('tasksDate');
+
+  if (weekdayEl) {
+    weekdayEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
+  }
+  if (dateEl) {
+    dateEl.textContent = now.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }
 }
 
 function setupEventListeners() {

@@ -1,3 +1,26 @@
+/* Date header - Tiimo-style productivity app */
+.tasks-date-header {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.tasks-weekday {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.6px;
+  margin-bottom: 6px;
+  line-height: 1.15;
+}
+
+.tasks-date {
+  font-size: 15px;
+  color: var(--text-sub);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
 .add-task-btn {
   background: var(--text-main);
   color: white;
