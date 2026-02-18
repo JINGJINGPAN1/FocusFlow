@@ -264,6 +264,25 @@
     </div>
   </div>
 
+  <!-- Delete Task Modal -->
+  <div id="deleteModal" class="modal" style="display: none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Delete Task</h2>
+        <button class="modal-close" id="closeDeleteModal">&times;</button>
+      </div>
+      <p class="delete-modal-message" id="deleteModalMessage"></p>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" id="cancelDeleteBtn">
+          Cancel
+        </button>
+        <button type="button" class="btn-danger" id="confirmDeleteBtn">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/js/main.js"></script>
 </body>
 

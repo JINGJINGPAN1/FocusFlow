@@ -196,3 +196,26 @@
 .btn-secondary:hover {
   background: var(--nav-border);
 }
+
+.btn-danger {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--error-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+}
+
+.delete-modal-message {
+  margin-bottom: 24px;
+  color: var(--text-main);
+  font-size: 15px;
+  line-height: 1.5;
+}

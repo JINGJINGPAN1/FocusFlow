@@ -5,6 +5,7 @@ const PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
 let tasks = [];
 let currentFilter = 'all';
 let editingTaskId = null;
+let deletingTaskId = null;
 
 export function initTasks() {
   updateDateHeader();
@@ -73,10 +74,44 @@ function setupEventListeners() {
     });
   });
 
+  const openDeleteModal = (task) => {
+    deletingTaskId = task._id;
+    const messageEl = document.getElementById('deleteModalMessage');
+    if (messageEl) {
+      messageEl.textContent = `Are you sure you want to delete "${task.text}"?`;
+    }
+    document.getElementById('deleteModal').style.display = 'flex';
+  };
+
   window.openModalForEdit = openModalForEdit;
+  window.openDeleteModal = openDeleteModal;
 
   closeModal?.addEventListener('click', closeTaskModal);
   cancelBtn?.addEventListener('click', closeTaskModal);
+
+  const closeDeleteModalEl = document.getElementById('closeDeleteModal');
+  const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+  const closeDeleteModal = () => {
+    document.getElementById('deleteModal').style.display = 'none';
+    deletingTaskId = null;
+  };
+
+  closeDeleteModalEl?.addEventListener('click', closeDeleteModal);
+  cancelDeleteBtn?.addEventListener('click', closeDeleteModal);
+
+  confirmDeleteBtn?.addEventListener('click', async () => {
+    if (deletingTaskId) {
+      try {
+        await api.deleteTask(deletingTaskId);
+        closeDeleteModal();
+        await loadTasks();
+      } catch (error) {
+        alert('Failed to delete task: ' + error.message);
+      }
+    }
+  });
 
   setupDurationSelector();
 
@@ -282,15 +317,11 @@ function attachTaskEventListeners() {
   });
 
   deleteBtns.forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('click', (e) => {
       const taskId = e.currentTarget.dataset.taskId;
-      if (confirm('Are you sure you want to delete this task?')) {
-        try {
-          await api.deleteTask(taskId);
-          await loadTasks();
-        } catch (error) {
-          alert('Failed to delete task: ' + error.message);
-        }
+      const task = tasks.find((t) => t._id === taskId);
+      if (task && window.openDeleteModal) {
+        window.openDeleteModal(task);
       }
     });
   });
