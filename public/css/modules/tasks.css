@@ -87,9 +87,32 @@
 }
 
 .period-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin: 0;
+}
+
+/* Color-coded period labels - pill style */
+.period-section[data-period='anytime'] .period-title {
+  background: #e8e8ed;
+  color: #5c5c62;
+}
+
+.period-section[data-period='morning'] .period-title {
+  background: #fff4e0;
+  color: #8b6914;
+}
+
+.period-section[data-period='afternoon'] .period-title {
+  background: #ede8f5;
+  color: #5a4a6e;
+}
+
+.period-section[data-period='evening'] .period-title {
+  background: #e3eef9;
+  color: #3d5a7a;
 }
 
 .section-add-btn {
