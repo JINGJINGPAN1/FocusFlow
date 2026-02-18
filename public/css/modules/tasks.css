@@ -130,77 +130,110 @@
 
 .todo-list {
   list-style: none;
-}
-
-.todo-item {
-  background: var(--accent-soft);
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 12px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
 }
 
-.todo-item[data-status='completed'] .todo-text {
+/* Task card - modern style */
+.task-card {
+  background: var(--card-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.task-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-soft);
+}
+
+.task-card[data-status='completed'] {
+  opacity: 0.85;
+}
+
+.task-card[data-status='completed'] .task-card-title {
   text-decoration: line-through;
   color: var(--text-sub);
 }
 
-.todo-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #d1d1d6;
-  border-radius: 4px;
+.task-card-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--nav-border);
+  border-radius: 8px;
   cursor: pointer;
   flex-shrink: 0;
+  accent-color: var(--primary-purple);
 }
 
-.todo-content {
+.task-card-body {
   flex: 1;
   min-width: 0;
 }
 
-.todo-text {
-  display: block;
-  font-size: 15px;
+.task-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.4;
 }
 
-.todo-duration {
-  display: block;
-  font-size: 12px;
+.task-card-duration {
+  display: inline-block;
+  font-size: 13px;
   color: var(--text-sub);
-  margin-top: 2px;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
-.todo-actions {
+.task-card-actions {
   display: flex;
-  gap: 12px;
+  gap: 6px;
   align-items: center;
 }
 
-.action-btn {
-  background: none;
+.task-card-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   border: none;
+  background: var(--accent-soft);
+  color: var(--text-sub);
   cursor: pointer;
-  width: 24px;
-  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-sub);
+  transition: all 0.2s;
 }
 
-.action-btn:hover {
-  color: var(--text-main);
+.task-card-btn .btn-icon {
+  font-size: 14px;
+  line-height: 1;
 }
 
-.action-btn.delete {
+.task-card-btn:hover {
+  background: var(--primary-purple);
+  color: white;
+}
+
+.task-card-btn-start:hover {
+  background: var(--success-color);
+}
+
+.task-card-btn-delete {
   color: var(--error-color);
 }
 
-.action-btn.delete:hover {
-  opacity: 0.8;
+.task-card-btn-delete:hover {
+  background: var(--error-color);
+  color: white;
 }
 
 .empty-state {

@@ -168,29 +168,29 @@ function renderTasks() {
     } else {
       periodTasks.forEach((task) => {
         const li = document.createElement('li');
-        li.className = 'todo-item';
+        li.className = 'task-card';
         li.setAttribute('data-status', task.completed ? 'completed' : 'active');
         const durationHtml = task.duration
-          ? `<span class="todo-duration">${task.duration} min</span>`
+          ? `<span class="task-card-duration">${task.duration} min</span>`
           : '';
         li.innerHTML = `
-          <input type="checkbox" class="todo-checkbox" ${
+          <input type="checkbox" class="task-card-checkbox" ${
             task.completed ? 'checked' : ''
-          } data-task-id="${task._id}">
-          <div class="todo-content">
-            <span class="todo-text">${escapeHtml(task.text)}</span>
+          } data-task-id="${task._id}" aria-label="Mark complete">
+          <div class="task-card-body">
+            <h4 class="task-card-title">${escapeHtml(task.text)}</h4>
             ${durationHtml}
           </div>
-          <div class="todo-actions">
-            <button class="action-btn" data-task-id="${
-              task._id
-            }" title="Start focus session">▶</button>
-            <button class="action-btn edit" data-task-id="${
-              task._id
-            }" title="Edit task">✎</button>
-            <button class="action-btn delete" data-task-id="${
-              task._id
-            }" title="Delete task">🗑</button>
+          <div class="task-card-actions">
+            <button class="task-card-btn task-card-btn-start" data-task-id="${task._id}" title="Start focus session" aria-label="Start focus">
+              <span class="btn-icon">▶</span>
+            </button>
+            <button class="task-card-btn task-card-btn-edit" data-task-id="${task._id}" title="Edit task" aria-label="Edit">
+              <span class="btn-icon">✎</span>
+            </button>
+            <button class="task-card-btn task-card-btn-delete" data-task-id="${task._id}" title="Delete task" aria-label="Delete">
+              <span class="btn-icon">🗑</span>
+            </button>
           </div>
         `;
         list.appendChild(li);
@@ -203,14 +203,14 @@ function renderTasks() {
 }
 
 function attachTaskEventListeners() {
-  const checkboxes = document.querySelectorAll('.todo-checkbox');
-  const deleteBtns = document.querySelectorAll('.action-btn.delete');
-  const editBtns = document.querySelectorAll('.action-btn.edit');
-  const startBtns = document.querySelectorAll('.action-btn:not(.delete):not(.edit)');
+  const checkboxes = document.querySelectorAll('.task-card-checkbox');
+  const deleteBtns = document.querySelectorAll('.task-card-btn-delete');
+  const editBtns = document.querySelectorAll('.task-card-btn-edit');
+  const startBtns = document.querySelectorAll('.task-card-btn-start');
 
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener('change', async (e) => {
-      const taskId = e.target.dataset.taskId;
+      const taskId = e.currentTarget.dataset.taskId;
       const task = tasks.find((t) => t._id === taskId);
       if (task) {
         try {
@@ -218,7 +218,7 @@ function attachTaskEventListeners() {
           await loadTasks();
         } catch (error) {
           alert('Failed to update task: ' + error.message);
-          e.target.checked = task.completed;
+          e.currentTarget.checked = task.completed;
         }
       }
     });
@@ -226,7 +226,7 @@ function attachTaskEventListeners() {
 
   deleteBtns.forEach((btn) => {
     btn.addEventListener('click', async (e) => {
-      const taskId = e.target.dataset.taskId;
+      const taskId = e.currentTarget.dataset.taskId;
       if (confirm('Are you sure you want to delete this task?')) {
         try {
           await api.deleteTask(taskId);
@@ -240,7 +240,7 @@ function attachTaskEventListeners() {
 
   editBtns.forEach((btn) => {
     btn.addEventListener('click', async (e) => {
-      const taskId = e.target.dataset.taskId;
+      const taskId = e.currentTarget.dataset.taskId;
       const task = tasks.find((t) => t._id === taskId);
       if (task) {
         const newText = prompt('Edit task:', task.text);
@@ -258,7 +258,7 @@ function attachTaskEventListeners() {
 
   startBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      const taskId = e.target.dataset.taskId;
+      const taskId = e.currentTarget.dataset.taskId;
       const task = tasks.find((t) => t._id === taskId);
       if (task && !task.completed) {
         window.startFocusSession(taskId, task.text);
