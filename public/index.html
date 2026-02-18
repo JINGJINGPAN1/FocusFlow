@@ -32,7 +32,7 @@
         <header class="tasks-date-header">
           <div class="tasks-date-left">
             <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
-            <p class="tasks-date" id="tasksDate">Feb 17, 2026</p>
+            <input type="date" id="tasksDatePicker" class="tasks-date-picker" />
           </div>
           <div class="daily-progress-ring">
             <div class="progress-ring-wrapper">
@@ -236,6 +236,10 @@
         <div class="form-group">
           <label for="taskText">Task Description</label>
           <input type="text" id="taskText" name="text" placeholder="Enter task description" required />
+        </div>
+        <div class="form-group">
+          <label for="taskDate">Date</label>
+          <input type="date" id="taskDate" name="date" />
         </div>
         <div class="form-group">
           <label>Duration</label>

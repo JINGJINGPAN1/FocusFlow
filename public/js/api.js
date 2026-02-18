@@ -1,7 +1,8 @@
 const API_BASE_URL = '/api';
 
-export async function fetchTasks() {
-  const response = await fetch(`${API_BASE_URL}/tasks`);
+export async function fetchTasks(date) {
+  const url = date ? `${API_BASE_URL}/tasks?date=${encodeURIComponent(date)}` : `${API_BASE_URL}/tasks`;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Failed to fetch tasks');
   }

@@ -6,27 +6,36 @@ let tasks = [];
 let currentFilter = 'all';
 let editingTaskId = null;
 let deletingTaskId = null;
+let selectedDate = new Date().toISOString().slice(0, 10);
 
 export function initTasks() {
+  initDatePicker();
   updateDateHeader();
   loadTasks();
   setupEventListeners();
 }
 
-function updateDateHeader() {
-  const now = new Date();
-  const weekdayEl = document.getElementById('tasksWeekday');
-  const dateEl = document.getElementById('tasksDate');
+function getTodayDateString() {
+  return new Date().toISOString().slice(0, 10);
+}
 
-  if (weekdayEl) {
-    weekdayEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
-  }
-  if (dateEl) {
-    dateEl.textContent = now.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
+function initDatePicker() {
+  const picker = document.getElementById('tasksDatePicker');
+  if (picker) {
+    picker.value = selectedDate;
+    picker.addEventListener('change', (e) => {
+      selectedDate = e.target.value;
+      updateDateHeader();
+      loadTasks();
     });
+  }
+}
+
+function updateDateHeader() {
+  const d = new Date(selectedDate + 'T12:00:00');
+  const weekdayEl = document.getElementById('tasksWeekday');
+  if (weekdayEl) {
+    weekdayEl.textContent = d.toLocaleDateString('en-US', { weekday: 'long' });
   }
 }
 
@@ -42,6 +51,8 @@ function setupEventListeners() {
     editingTaskId = null;
     setModalMode('add');
     document.getElementById('taskForm').reset();
+    const dateInput = document.getElementById('taskDate');
+    if (dateInput) dateInput.value = selectedDate;
     const radio = document.querySelector(`input[name="period"][value="${preselectedPeriod}"]`);
     if (radio) radio.checked = true;
     resetDurationSelector();
@@ -52,6 +63,8 @@ function setupEventListeners() {
     editingTaskId = task._id;
     setModalMode('edit');
     document.getElementById('taskText').value = task.text;
+    const dateInput = document.getElementById('taskDate');
+    if (dateInput) dateInput.value = task.date || getTodayDateString();
     const radio = document.querySelector(`input[name="period"][value="${task.period || 'anytime'}"]`);
     if (radio) radio.checked = true;
     const duration = task.duration || DURATION_DEFAULT;
@@ -121,12 +134,19 @@ function setupEventListeners() {
     const text = formData.get('text');
     const period = formData.get('period') || 'anytime';
     const duration = parseInt(document.getElementById('taskDuration').value, 10) || 25;
+    const date = document.getElementById('taskDate').value || getTodayDateString();
 
     try {
       if (editingTaskId) {
-        await api.updateTask(editingTaskId, { text, period, duration });
+        await api.updateTask(editingTaskId, { text, period, duration, date });
       } else {
-        await api.createTask({ text, period, duration });
+        await api.createTask({ text, period, duration, date });
+        if (date !== selectedDate) {
+          selectedDate = date;
+          const picker = document.getElementById('tasksDatePicker');
+          if (picker) picker.value = date;
+          updateDateHeader();
+        }
       }
       closeTaskModal();
       await loadTasks();
@@ -211,7 +231,7 @@ function resetDurationSelector() {
 
 async function loadTasks() {
   try {
-    tasks = await api.fetchTasks();
+    tasks = await api.fetchTasks(selectedDate);
     renderTasks();
   } catch (error) {
     console.error('Error loading tasks:', error);

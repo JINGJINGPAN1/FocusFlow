@@ -21,11 +21,15 @@
   line-height: 1.15;
 }
 
-.tasks-date {
+.tasks-date-picker {
   font-size: 15px;
   color: var(--text-sub);
   font-weight: 400;
-  letter-spacing: 0.3px;
+  padding: 6px 10px;
+  border: 1px solid var(--nav-border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  cursor: pointer;
 }
 
 /* Daily Progress Ring - right side of date header */

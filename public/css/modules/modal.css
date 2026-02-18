@@ -66,6 +66,7 @@
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="number"],
+.form-group input[type="date"],
 .form-group select {
   width: 100%;
   padding: 10px 12px;

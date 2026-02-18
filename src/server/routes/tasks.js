@@ -3,11 +3,25 @@ import { getCollection } from '../db/database.js';
 
 const router = express.Router();
 
-// GET all tasks
+function getTodayDateString() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// GET all tasks (optional ?date=YYYY-MM-DD to filter by date)
 router.get('/', async (req, res) => {
   try {
     const tasksCollection = getCollection('tasks');
-    const tasks = await tasksCollection.find({}).toArray();
+    let query = {};
+    if (req.query.date) {
+      const today = getTodayDateString();
+      query = {
+        $or: [
+          { date: req.query.date },
+          ...(req.query.date === today ? [{ date: { $exists: false } }] : []),
+        ],
+      };
+    }
+    const tasks = await tasksCollection.find(query).toArray();
     res.json(tasks);
   } catch (error) {
     console.error('Error fetching tasks:', error);
@@ -40,7 +54,7 @@ const VALID_PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
 // POST create a new task
 router.post('/', async (req, res) => {
   try {
-    const { text, completed = false, period = 'anytime', duration } = req.body;
+    const { text, completed = false, period = 'anytime', duration, date } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim() === '') {
       return res.status(400).json({ error: 'Task text is required' });
@@ -55,6 +69,7 @@ router.post('/', async (req, res) => {
       !isNaN(parsedDuration) && parsedDuration > 0
         ? Math.max(5, Math.min(180, parsedDuration))
         : 25;
+    const taskDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : getTodayDateString();
 
     const tasksCollection = getCollection('tasks');
     const newTask = {
@@ -62,6 +77,7 @@ router.post('/', async (req, res) => {
       completed: Boolean(completed),
       period: taskPeriod,
       duration: taskDuration,
+      date: taskDate,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -91,6 +107,10 @@ router.put('/:id', async (req, res) => {
       updateData.period = VALID_PERIODS.includes(req.body.period)
         ? req.body.period
         : 'anytime';
+    }
+
+    if (req.body.date !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(req.body.date)) {
+      updateData.date = req.body.date;
     }
 
     if (text !== undefined) {
