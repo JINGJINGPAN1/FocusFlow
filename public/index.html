@@ -213,13 +213,25 @@
           <input type="text" id="taskText" name="text" placeholder="Enter task description" required />
         </div>
         <div class="form-group">
-          <label for="taskPeriod">Time of Day</label>
-          <select id="taskPeriod" name="period">
-            <option value="anytime">Anytime</option>
-            <option value="morning">Morning</option>
-            <option value="afternoon">Afternoon</option>
-            <option value="evening">Evening</option>
-          </select>
+          <label>Time of Day</label>
+          <div class="period-radio-group">
+            <label class="period-radio-option">
+              <input type="radio" name="period" value="anytime" checked />
+              <span>Anytime</span>
+            </label>
+            <label class="period-radio-option">
+              <input type="radio" name="period" value="morning" />
+              <span>Morning</span>
+            </label>
+            <label class="period-radio-option">
+              <input type="radio" name="period" value="afternoon" />
+              <span>Afternoon</span>
+            </label>
+            <label class="period-radio-option">
+              <input type="radio" name="period" value="evening" />
+              <span>Evening</span>
+            </label>
+          </div>
         </div>
         <div class="form-actions">
           <button type="button" class="btn-secondary" id="cancelBtn">

@@ -37,8 +37,8 @@ function setupEventListeners() {
   const sectionAddBtns = document.querySelectorAll('.section-add-btn');
 
   const openModal = (preselectedPeriod = 'anytime') => {
-    const periodSelect = document.getElementById('taskPeriod');
-    if (periodSelect) periodSelect.value = preselectedPeriod;
+    const radio = document.querySelector(`input[name="period"][value="${preselectedPeriod}"]`);
+    if (radio) radio.checked = true;
     document.getElementById('taskModal').style.display = 'flex';
   };
 

@@ -63,7 +63,9 @@
   margin-bottom: 6px;
 }
 
-.form-group input,
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"],
 .form-group select {
   width: 100%;
   padding: 10px 12px;
@@ -77,6 +79,45 @@
 .form-group select {
   cursor: pointer;
   appearance: auto;
+}
+
+.period-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.period-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--nav-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-main);
+  transition: all 0.2s;
+}
+
+.period-radio-option:hover {
+  border-color: var(--primary-purple);
+  background: var(--accent-soft);
+}
+
+.period-radio-option input {
+  margin: 0;
+  width: auto;
+  accent-color: var(--primary-purple);
+}
+
+.period-radio-option input:checked + span {
+  font-weight: 600;
+}
+
+.period-radio-option:has(input:checked) {
+  border-color: var(--primary-purple);
+  background: var(--accent-soft);
 }
 
 .form-actions {
