@@ -64,6 +64,80 @@ function computeCompletionStreak(tasks) {
   return streak;
 }
 
+function computeTasksPerDay(tasks) {
+  const weekStart = getWeekStartDate();
+  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const result = dayNames.map((name, i) => ({ day: name, count: 0 }));
+
+  for (const t of tasks) {
+    if (!t.completed) continue;
+    const taskDate = t.date || getDateString(new Date(t.updatedAt || t.createdAt));
+    const d = new Date(taskDate + 'T12:00:00');
+    const diffDays = Math.floor((d - weekStart) / (24 * 60 * 60 * 1000));
+    if (diffDays >= 0 && diffDays < 7) {
+      result[diffDays].count++;
+    }
+  }
+  return result;
+}
+
+function computePeriodDistribution(tasks) {
+  const completed = tasks.filter((t) => t.completed);
+  const total = completed.length;
+  const counts = { morning: 0, afternoon: 0, evening: 0, anytime: 0 };
+
+  for (const t of completed) {
+    const period = (t.period || 'anytime').toLowerCase();
+    if (counts[period] !== undefined) counts[period]++;
+  }
+
+  return [
+    { label: 'Morning', count: counts.morning, percent: total > 0 ? (counts.morning / total) * 100 : 0 },
+    { label: 'Afternoon', count: counts.afternoon, percent: total > 0 ? (counts.afternoon / total) * 100 : 0 },
+    { label: 'Evening', count: counts.evening, percent: total > 0 ? (counts.evening / total) * 100 : 0 },
+  ];
+}
+
+function renderWeeklyChart(tasksPerDay) {
+  const container = document.getElementById('weeklyChart');
+  if (!container) return;
+
+  const maxCount = Math.max(1, ...tasksPerDay.map((d) => d.count));
+
+  container.innerHTML = tasksPerDay
+    .map(
+      (d) => `
+    <div class="chart-bar-wrapper">
+      <div class="chart-bar-container">
+        <div class="chart-bar" style="height: ${(d.count / maxCount) * 100}%"></div>
+      </div>
+      <span class="chart-bar-value">${d.count}</span>
+      <span class="chart-bar-label">${d.day}</span>
+    </div>
+  `
+    )
+    .join('');
+}
+
+function renderPeriodDistribution(distribution) {
+  const container = document.getElementById('periodDistribution');
+  if (!container) return;
+
+  container.innerHTML = distribution
+    .map(
+      (d) => `
+    <div class="period-bar-row">
+      <span class="period-bar-label">${d.label}</span>
+      <div class="period-bar-track">
+        <div class="period-bar-fill" style="width: ${d.percent}%"></div>
+      </div>
+      <span class="period-bar-percent">${Math.round(d.percent)}%</span>
+    </div>
+  `
+    )
+    .join('');
+}
+
 async function loadStats() {
   try {
     const [tasks, sessions] = await Promise.all([
@@ -75,6 +149,8 @@ async function loadStats() {
     const weeklyFocusSeconds = computeWeeklyFocusTime(sessions);
     const weeklyFocusMinutes = Math.floor(weeklyFocusSeconds / 60);
     const streak = computeCompletionStreak(tasks);
+    const tasksPerDay = computeTasksPerDay(tasks);
+    const periodDistribution = computePeriodDistribution(tasks);
 
     const weeklyEl = document.getElementById('weeklyCompletedTasks');
     const focusEl = document.getElementById('weeklyFocusMinutes');
@@ -83,6 +159,9 @@ async function loadStats() {
     if (weeklyEl) weeklyEl.textContent = weeklyCompleted;
     if (focusEl) focusEl.textContent = weeklyFocusMinutes;
     if (streakEl) streakEl.textContent = streak;
+
+    renderWeeklyChart(tasksPerDay);
+    renderPeriodDistribution(periodDistribution);
   } catch (error) {
     console.error('Error loading stats:', error);
   }

@@ -188,31 +188,42 @@
 
     <!-- Stats Page -->
     <div id="statsPage" class="page">
-      <div class="glass-card">
-        <h1>Statistics</h1>
-        <p class="stats-subtitle">
-          Track your productivity and focus time
-        </p>
+      <div class="glass-card stats-page">
+        <header class="stats-header">
+          <h1>Statistics</h1>
+          <p class="stats-subtitle">Your productivity insights</p>
+        </header>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value" id="weeklyCompletedTasks">0</div>
-            <div class="stat-label">Weekly Completed Tasks</div>
+        <div class="streak-card">
+          <div class="streak-value" id="completionStreak">0</div>
+          <div class="streak-label">Day Streak</div>
+          <p class="streak-desc">Consecutive days with at least one completed task</p>
+        </div>
+
+        <div class="overview-cards">
+          <div class="overview-card">
+            <div class="overview-icon">🎯</div>
+            <div class="overview-value" id="weeklyCompletedTasks">0</div>
+            <div class="overview-label">Tasks completed this week</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">⏰</div>
-            <div class="stat-value" id="weeklyFocusMinutes">0</div>
-            <div class="stat-label">Focus Time This Week (min)</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-value" id="completionStreak">0</div>
-            <div class="stat-label">Current Streak (days)</div>
+          <div class="overview-card">
+            <div class="overview-icon">⏰</div>
+            <div class="overview-value" id="weeklyFocusMinutes">0</div>
+            <div class="overview-label">Focus time this week (min)</div>
           </div>
         </div>
 
-        <div class="recent-sessions">
+        <section class="stats-section weekly-chart-section">
+          <h2 class="stats-section-title">Tasks Completed This Week</h2>
+          <div id="weeklyChart" class="weekly-chart"></div>
+        </section>
+
+        <section class="stats-section period-distribution-section">
+          <h2 class="stats-section-title">Completion by Time of Day</h2>
+          <div id="periodDistribution" class="period-distribution"></div>
+        </section>
+
+        <section class="recent-sessions">
           <div class="recent-sessions-header">
             <span class="nav-icon">📅</span>
             <span>Recent Sessions</span>
@@ -220,7 +231,7 @@
           <div id="recentSessionsContent" class="recent-sessions-list">
             Loading...
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>

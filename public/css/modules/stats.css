@@ -1,48 +1,189 @@
+.stats-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stats-header {
+  margin-bottom: 8px;
+}
+
+.stats-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
 .stats-subtitle {
   color: var(--text-sub);
   font-size: 14px;
-  margin-bottom: 24px;
+  margin: 0;
 }
 
-.stats-grid {
+/* Streak Card */
+.streak-card {
+  background: linear-gradient(135deg, var(--primary-purple) 0%, #5a4a8a 100%);
+  color: white;
+  padding: 28px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.streak-value {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.streak-label {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+.streak-desc {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* Overview Cards */
+.overview-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 24px;
 }
 
-.stat-card {
+.overview-card {
   background: var(--accent-soft);
   padding: 20px;
   border-radius: 16px;
   text-align: center;
 }
 
-.stat-icon {
-  width: 24px;
-  height: 24px;
-  margin: 0 auto 12px;
-  color: var(--text-sub);
-  font-size: 24px;
+.overview-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
 }
 
-.stat-value {
-  font-size: 28px;
-  font-weight: 600;
+.overview-value {
+  font-size: 32px;
+  font-weight: 700;
   color: var(--text-main);
   margin-bottom: 4px;
 }
 
-.stat-label {
-  font-size: 12px;
+.overview-label {
+  font-size: 13px;
   color: var(--text-sub);
+}
+
+/* Stats Sections */
+.stats-section {
+  background: var(--accent-soft);
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.stats-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+/* Weekly Chart */
+.weekly-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-bar-container {
+  height: 100px;
+  width: 100%;
+  max-width: 36px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chart-bar {
+  width: 100%;
+  min-height: 4px;
+  background: var(--primary-purple);
+  border-radius: 8px 8px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-bar-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.chart-bar-label {
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* Period Distribution */
+.period-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.period-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.period-bar-label {
+  font-size: 14px;
+  color: var(--text-main);
+  min-width: 80px;
+}
+
+.period-bar-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.period-bar-fill {
+  height: 100%;
+  background: var(--primary-purple);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.period-bar-percent {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 36px;
+  text-align: right;
 }
 
 .recent-sessions {
   background: var(--accent-soft);
   border-radius: 16px;
   padding: 24px;
-  margin-top: 24px;
 }
 
 .recent-sessions-header {
