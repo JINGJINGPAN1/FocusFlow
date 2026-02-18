@@ -1,353 +1,353 @@
-# FocusFlow - Design Document
+# FocusFlow – Design Document
 
-## Approved Project Proposal (#project)
+## 1. Project Description
 
-*Submitted to John Alexis Guerra Gomez (Teacher)*
+**FocusFlow** is a web-based productivity application that helps users manage tasks and maintain focus through structured, timed work sessions. It combines task management with a Pomodoro-style focus timer, enabling users to organize their work, stay concentrated, and track productivity over time.
 
-**Project Name:** FocusFlow – Task-Centric Focus & Pomodoro Tracker
+Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **execution over planning**. Users create tasks, choose a focus duration, and start working. Each completed session is recorded and contributes to productivity insights. The app is designed for students, remote workers, and anyone who wants a simple, distraction-free way to focus and understand how they spend their time.
 
-**Members:**
+### Core Features
 
-- **Jingjing Pan** – Todo Management & Frontend Rendering  
-  *(Collections: todos)*
-- **Yingyi Kong** – Focus Timer & Session Tracking  
-  *(Collections: focus_sessions)*
+| Feature | Description |
+|--------|-------------|
+| **Task Management** | Create, edit, delete, and complete tasks. Organize by date and time of day (Anytime, Morning, Afternoon, Evening). |
+| **Focus Sessions** | Start timed focus sessions with preset durations (15, 25, 45, 60 min) or custom length. Optional white noise. Play/pause control. |
+| **Session Completion** | Clear completion state with success feedback, duration display, and "Start Another Session" button. |
+| **Statistics** | Day streak, weekly completed tasks, weekly focus minutes, bar chart by weekday, and completion by time of day. |
 
-**Description:**
+### Technology Stack
 
-FocusFlow is a task-centric focus management web application designed to help students stay productive by combining task tracking with Pomodoro-style focus sessions. Users create a list of tasks and select one task at a time to start a focused work session. Each completed focus session is recorded and linked to its corresponding task, allowing users to review their productivity over time.
-
-Unlike calendar-based productivity tools that rely on time-block scheduling, FocusFlow emphasizes execution over planning. By centering the experience around tasks and short, intentional focus intervals, the application helps users avoid multitasking and track real progress. The app is especially useful for students managing multiple assignments who want a simple, distraction-free way to focus and understand how they spend their study time.
-
-**User Personas (from proposal):**
-
-1. **College Student** – Manages multiple assignments and exams; needs a simple way to focus on one task at a time.
-2. **Procrastinating Student** – Struggles with starting tasks; benefits from short, structured focus sessions.
-3. **Productivity-Oriented User** – Wants to track how much time is spent on each task; uses productivity data to improve study habits.
-
-**User Stories (from proposal):**
-
-*Jingjing Pan – Todo Management*
-
-- As a student, I want to create a todo item, so I can organize what I need to work on.
-- As a student, I want to view a list of my todos, so I can see all my tasks in one place.
-- As a student, I want to mark a todo as completed, so I can track finished work.
-- As a student, I want to delete a todo, so I can remove tasks that are no longer relevant.
-
-*Yingyi Kong – Focus Timer & Session Tracking*
-
-- As a student, I want to start a focus session for a specific todo, so I can concentrate on one task.
-- As a student, I want to use a Pomodoro-style timer, so I can work in focused intervals.
-- As a student, I want each completed focus session to be saved, so I can review my productivity history.
-- As a student, I want to see how many focus sessions I completed today, so I understand my study effort.
-
-**Technology Stack:** Node.js and Express backend with MongoDB for data persistence; client-side rendered frontend built with HTML5, CSS, and vanilla JavaScript.
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB (native driver)
+- **Frontend**: HTML5, Vanilla JavaScript (ES Modules), client-side rendering
+- **Styling**: CSS modules (variables, base, navigation, tasks, focus, stats, modal)
 
 ---
 
-The sections below expand on this proposal with detailed personas, user stories (including acceptance criteria), design mockups, and technical architecture. Implementation uses the `tasks` and `sessions` collections (aligned with the proposed todos and focus_sessions scope).
+## 2. User Personas
 
----
-
-## Project Description
-
-FocusFlow is a web-based productivity application designed to help users manage their tasks and maintain focus through structured work sessions. The application combines task management capabilities with a Pomodoro-style timer system, allowing users to organize their work and track their productivity over time.
-
-The application is built using Node.js and Express.js for the backend, MongoDB for data persistence, and vanilla JavaScript for client-side rendering. It follows modern web development practices with modular code organization, ES modules, and a clean separation of concerns.
-
-### Core Functionality
-
-1. **Task Management**: Users can create, read, update, and delete tasks
-2. **Focus Sessions**: Users can start timed focus sessions for specific tasks
-3. **Statistics Tracking**: The application tracks and displays productivity metrics
-4. **User Interface**: A clean, modern interface with three main views (Tasks, Focus, Stats)
-
-## User Personas
-
-### Persona 1: Sarah - The Student
+### Persona 1: Sarah – The College Student
 
 **Age**: 22  
 **Occupation**: College Student  
 **Tech Savviness**: High  
-**Goals**: Manage coursework, study sessions, and assignments efficiently  
-**Pain Points**: 
-- Difficulty staying focused during study sessions
-- Losing track of assignments and deadlines
-- No clear way to measure study productivity
 
-**How FocusFlow Helps**: Sarah can create tasks for each assignment, use focus sessions to maintain concentration during study time, and track how many productive sessions she completes each day.
+**Goals**: Manage coursework, study for exams, and complete assignments on time.
 
-### Persona 2: Mark - The Remote Worker
+**Pain Points**:
+- Struggles to stay focused during long study sessions
+- Loses track of assignments across multiple classes
+- Has no clear way to measure study productivity
+
+**How FocusFlow Helps**: Sarah creates tasks for each assignment, uses focus sessions to maintain concentration, and reviews statistics to see how much she accomplished each week.
+
+---
+
+### Persona 2: Mark – The Remote Worker
 
 **Age**: 35  
 **Occupation**: Software Developer (Remote)  
 **Tech Savviness**: Very High  
-**Goals**: Stay productive while working from home, manage multiple projects  
+
+**Goals**: Stay productive at home, manage multiple projects, and maintain deep work periods.
+
 **Pain Points**:
-- Distractions at home
+- Distractions at home (family, notifications)
 - Difficulty tracking time spent on different projects
-- Need for structured work breaks
+- Needs structured work intervals and breaks
 
-**How FocusFlow Helps**: Mark can organize work tasks, use focus sessions to maintain deep work periods, and review statistics to understand his productivity patterns throughout the week.
+**How FocusFlow Helps**: Mark organizes work tasks by time of day, uses focus sessions for deep work, and reviews weekly charts to understand his productivity patterns.
 
-### Persona 3: Lisa - The Freelancer
+---
 
-**Age**: 28  
-**Occupation**: Graphic Designer (Freelance)  
+### Persona 3: Lisa – The Procrastinator
+
+**Age**: 24  
+**Occupation**: Graduate Student  
 **Tech Savviness**: Medium  
-**Goals**: Balance multiple client projects, track billable hours  
+
+**Goals**: Overcome procrastination and build consistent study habits.
+
 **Pain Points**:
-- Juggling multiple client projects
-- Need to track time for billing purposes
-- Staying focused on creative work
+- Hard to start tasks; often feels overwhelmed
+- Benefits from short, structured sessions rather than long blocks
+- Wants visible progress to stay motivated
 
-**How FocusFlow Helps**: Lisa can create tasks for each client project, use focus sessions to track time spent, and review statistics to understand her work patterns and bill clients accurately.
+**How FocusFlow Helps**: Lisa uses short focus sessions (15–25 min) to break work into manageable chunks. The completion screen and day streak give her a sense of achievement and encourage consistency.
 
-## User Stories
+---
 
-### Task Management Stories
+## 3. User Stories
 
-**Story 1: Creating a Task**
-- **As a** user  
-- **I want to** create a new task with a description  
-- **So that** I can keep track of things I need to do  
-- **Acceptance Criteria**:
-  - User can click "Add Task" button
-  - A modal form appears
-  - User can enter task description
-  - Task is saved and appears in the task list
-  - Form validates that task text is not empty
+User stories are written in narrative form: *As a [role], I want to [action], so that [benefit].*
 
-**Story 2: Completing a Task**
-- **As a** user  
-- **I want to** mark tasks as completed  
-- **So that** I can track my progress  
-- **Acceptance Criteria**:
-  - User can check a checkbox next to a task
-  - Task is marked as completed
-  - Completed tasks are visually distinct
-  - Task count updates accordingly
+### Task Management
 
-**Story 3: Editing a Task**
-- **As a** user  
-- **I want to** edit existing tasks  
-- **So that** I can update task descriptions  
-- **Acceptance Criteria**:
-  - User can click edit button on a task
-  - A prompt appears with current task text
-  - User can modify and save changes
-  - Updated task appears in the list
+**Story 1: Creating a Task**  
+*As a student, I want to create a task with a description, date, duration, and time of day, so that I can organize what I need to work on and when.*
 
-**Story 4: Deleting a Task**
-- **As a** user  
-- **I want to** delete tasks I no longer need  
-- **So that** I can keep my task list clean  
-- **Acceptance Criteria**:
-  - User can click delete button
-  - Confirmation dialog appears
-  - Task is removed upon confirmation
-  - Task list updates immediately
+- User clicks "+ Add Task" or the "+" in a period section.
+- A modal opens with fields: task description, date, duration (5–180 min), and time of day (Anytime, Morning, Afternoon, Evening).
+- On submit, the task is saved and appears in the corresponding period section.
+- The progress ring and filter counts update.
 
-**Story 5: Filtering Tasks**
-- **As a** user  
-- **I want to** filter tasks by status (all/active/completed)  
-- **So that** I can focus on relevant tasks  
-- **Acceptance Criteria**:
-  - User can click filter buttons
-  - Task list shows only filtered tasks
-  - Counts update for each filter
-  - Active filter is visually highlighted
+**Story 2: Viewing and Filtering Tasks**  
+*As a user, I want to view my tasks and filter by All, Active, or Completed, so that I can focus on what matters right now.*
 
-### Focus Session Stories
+- Tasks are grouped by time of day (Anytime, Morning, Afternoon, Evening).
+- Filter buttons show counts and toggle the visible task list.
+- A date picker allows viewing tasks for different days.
+- A progress ring shows daily completion (e.g., 2/5 tasks).
 
-**Story 6: Starting a Focus Session**
-- **As a** user  
-- **I want to** start a focus session for a specific task  
-- **So that** I can work on it without distractions  
-- **Acceptance Criteria**:
-  - User selects a task and clicks play button
-  - User is navigated to Focus page
-  - User can set session duration
-  - Timer starts counting down
-  - Session is saved to database
+**Story 3: Completing a Task**  
+*As a user, I want to mark a task as completed, so that I can track my progress and feel a sense of accomplishment.*
 
-**Story 7: Pausing a Focus Session**
-- **As a** user  
-- **I want to** pause an active focus session  
-- **So that** I can take breaks when needed  
-- **Acceptance Criteria**:
-  - User can click pause button
-  - Timer stops counting
-  - User can resume by clicking play again
-  - Session state is preserved
+- User checks the checkbox next to a task.
+- The task is marked completed and moves to the completed filter.
+- The progress ring and period progress update.
 
-**Story 8: Completing a Focus Session**
-- **As a** user  
-- **I want to** complete a focus session  
-- **So that** it counts toward my productivity stats  
-- **Acceptance Criteria**:
-  - When timer reaches zero, session completes automatically
-  - User receives confirmation message
-  - Session is marked as completed in database
-  - Statistics update accordingly
+**Story 4: Editing and Deleting a Task**  
+*As a user, I want to edit or delete tasks, so that I can keep my list accurate and up to date.*
 
-**Story 9: Stopping a Focus Session**
-- **As a** user  
-- **I want to** stop a focus session early  
-- **So that** I can end sessions when needed  
-- **Acceptance Criteria**:
-  - User can click stop button
-  - Confirmation dialog appears
-  - Session is deleted or marked incomplete
-  - User returns to no-session view
+- Edit: User clicks the edit button, modal opens with current values, user saves changes.
+- Delete: User clicks delete, confirmation dialog appears, task is removed on confirm.
 
-### Statistics Stories
+**Story 5: Starting Focus from a Task**  
+*As a student, I want to start a focus session for a specific task, so that I can concentrate on one thing at a time.*
 
-**Story 10: Viewing Daily Statistics**
-- **As a** user  
-- **I want to** see my productivity statistics  
-- **So that** I can track my progress  
-- **Acceptance Criteria**:
-  - User navigates to Stats page
-  - Sees sessions completed today
-  - Sees total minutes focused
-  - Sees Pomodoros completed (25-minute sessions)
+- User clicks the play (▶) button on a task card.
+- The app navigates to the Focus page and starts a session with the task’s duration.
+- The timer and white noise are ready to use.
 
-**Story 11: Viewing Recent Sessions**
-- **As a** user  
-- **I want to** see my recent focus sessions  
-- **So that** I can review my work history  
-- **Acceptance Criteria**:
-  - Recent sessions list displays on Stats page
-  - Shows session date, duration, and completion status
-  - Sessions are sorted by most recent first
-  - Empty state shown when no sessions exist
+---
 
-## Design Mockups
+### Focus Sessions
 
-### Tasks Page
+**Story 6: Starting a Focus Session**  
+*As a user, I want to choose a duration and start a focus session anytime, so that I can focus even when I don’t have a specific task.*
+
+- User goes to the Focus tab and sees "Focus Session" with "How long do you want to focus?"
+- User selects a preset (15, 25, 45, 60 min) or enters a custom duration.
+- User clicks "Start" and the focus view appears with a countdown and play button.
+- User clicks play to start the timer and optional white noise.
+
+**Story 7: Pausing and Resuming a Focus Session**  
+*As a user, I want to pause and resume a focus session, so that I can take breaks when needed without losing my place.*
+
+- User clicks the play/pause button to toggle.
+- When paused, the timer stops and white noise stops.
+- When resumed, both continue from where they left off.
+
+**Story 8: Completing a Focus Session**  
+*As a user, I want to see a clear completion state when a session ends, so that I feel rewarded and know what I achieved.*
+
+- When the timer reaches zero, the completion view appears.
+- User sees a success icon, "Session Complete," the completed duration (e.g., "25 min"), and "You focused for 25 minutes."
+- User can click "Start Another Session" to return to the duration selection screen.
+
+---
+
+### Statistics
+
+**Story 9: Viewing Productivity Statistics**  
+*As a user, I want to see my productivity statistics, so that I can understand my habits and improve over time.*
+
+- User navigates to the Stats tab.
+- User sees: day streak, weekly completed tasks, weekly focus minutes.
+- User sees a bar chart of tasks completed per weekday.
+- User sees completion distribution by time of day (Morning, Afternoon, Evening).
+
+---
+
+## 4. Design Mockups
+
+### 4.1 Tasks Page
 
 ```
-┌─────────────────────────────────────┐
-│  📋 Tasks    ⏱ Focus    📊 Stats   │
-├─────────────────────────────────────┤
-│                                     │
-│  Tasks                    [+ Add]  │
-│                                     │
-│  All (5)  Active (3)  Completed(2) │
-│  ─────────────────────────────────  │
-│                                     │
-│  ☐ Complete project proposal    ▶✎🗑│
-│  ☐ Review design mockups        ▶✎🗑│
-│  ☑ Submit assignment            ▶✎🗑│
-│                                     │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  📋 Tasks          ⏱ Focus          📊 Stats                    │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │  Tuesday        [📅 2026-02-17]         ╭──────╮           │  │
+│  │                                          │ 60% │           │  │
+│  │                                          │ 3/5 │           │  │
+│  │                                          ╰──────╯           │  │
+│  ├────────────────────────────────────────────────────────────┤  │
+│  │  Tasks                                    [+ Add Task]      │  │
+│  ├────────────────────────────────────────────────────────────┤  │
+│  │  All (5)    Active (2)    Completed (3)                    │  │
+│  ├────────────────────────────────────────────────────────────┤  │
+│  │  Anytime                                        0/1    [+]  │  │
+│  │  ┌─────────────────────────────────────────────────────┐   │  │
+│  │  │ ☐ Review design doc                    [▶] [✎] [🗑] │   │  │
+│  │  └─────────────────────────────────────────────────────┘   │  │
+│  │  Morning                                         1/2   [+]  │  │
+│  │  ┌─────────────────────────────────────────────────────┐   │  │
+│  │  │ ☑ Submit assignment                   [▶] [✎] [🗑] │   │  │
+│  │  │ ☐ Study for exam                       [▶] [✎] [🗑] │   │  │
+│  │  └─────────────────────────────────────────────────────┘   │  │
+│  │  Afternoon                                       1/1   [+]  │  │
+│  │  Evening                                         0/1   [+]  │  │
+│  └────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-### Focus Page (No Session)
+---
+
+### 4.2 Focus Page – Duration Selection (No Session)
 
 ```
-┌─────────────────────────────────────┐
-│  📋 Tasks    ⏱ Focus    📊 Stats   │
-├─────────────────────────────────────┤
-│                                     │
-│         ╭─────────╮                 │
-│         │    ▶    │                 │
-│         ╰─────────╯                 │
-│                                     │
-│    No Active Focus Session          │
-│                                     │
-│  Select a task and click the play   │
-│  button to start a focus session    │
-│                                     │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  📋 Tasks          ⏱ Focus          📊 Stats                    │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │                                                              │  │
+│  │                    ╭─────────╮                               │  │
+│  │                    │    ▶    │                               │  │
+│  │                    ╰─────────╯                               │  │
+│  │                                                              │  │
+│  │                  Focus Session                               │  │
+│  │           How long do you want to focus?                     │  │
+│  │                                                              │  │
+│  │              [15]  [25]  [45]  [60]                         │  │
+│  │                   [Custom] min                               │  │
+│  │                                                              │  │
+│  │                  [▶ Start]                                  │  │
+│  │                                                              │  │
+│  └────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-### Focus Page (Active Session)
+---
+
+### 4.3 Focus Page – Active Session
 
 ```
-┌─────────────────────────────────────┐
-│  📋 Tasks    ⏱ Focus    📊 Stats   │
-├─────────────────────────────────────┤
-│                                     │
-│         Focus Session               │
-│   Stay focused on your task         │
-│                                     │
-│  Complete project proposal          │
-│                                     │
-│         ╭─────────╮                 │
-│         │  25:00  │                 │
-│         ╰─────────╯                 │
-│                                     │
-│      ⏸    ▶    ⏹                  │
-│                                     │
-│  Duration (minutes)                 │
-│  [25]                               │
-│  [Start Session]                    │
-│                                     │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  📋 Tasks          ⏱ Focus          📊 Stats                    │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │                  Focus Music                                │  │
+│  │            Play music to help you concentrate               │  │
+│  │                                                              │  │
+│  │                    ╭─────────────╮                          │  │
+│  │                    │  ◉ vinyl    │                          │  │
+│  │                    │   record    │                          │  │
+│  │                    ╰─────────────╯                          │  │
+│  │                                                              │  │
+│  │                      24:35                                   │  │
+│  │                    remaining                                 │  │
+│  │                                                              │  │
+│  │                    [  ⏸  ]                                  │  │
+│  │                                                              │  │
+│  │  🔊 ████████████░░░░░░░░  70%                                │  │
+│  └────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-### Statistics Page
+---
+
+### 4.4 Focus Page – Session Complete
 
 ```
-┌─────────────────────────────────────┐
-│  📋 Tasks    ⏱ Focus    📊 Stats   │
-├─────────────────────────────────────┤
-│                                     │
-│  Statistics                          │
-│  Track your productivity            │
-│                                     │
-│  ┌─────┐  ┌─────┐  ┌─────┐        │
-│  │  🎯 │  │  ⏰ │  │  📈 │        │
-│  │  5  │  │ 125 │  │  3  │        │
-│  │Today│  │Mins │  │Poms │        │
-│  └─────┘  └─────┘  └─────┘        │
-│                                     │
-│  📅 Recent Sessions                 │
-│  ────────────────────────           │
-│  Feb 9, 2026    25 min  ✅         │
-│  Feb 9, 2026    30 min  ✅         │
-│  Feb 8, 2026    25 min  ✅         │
-│                                     │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  📋 Tasks          ⏱ Focus          📊 Stats                    │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │                                                              │  │
+│  │                      ╭─────╮                                 │  │
+│  │                      │  ✓  │   (green circle)                │  │
+│  │                      ╰─────╯                                 │  │
+│  │                                                              │  │
+│  │                 Session Complete                             │  │
+│  │                                                              │  │
+│  │                      25 min                                  │  │
+│  │                                                              │  │
+│  │            You focused for 25 minutes                        │  │
+│  │                                                              │  │
+│  │            [Start Another Session]                           │  │
+│  │                                                              │  │
+│  └────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-## Technical Architecture
+---
 
-### Backend Architecture
+### 4.5 Statistics Page
 
-- **Server**: Express.js running on Node.js
-- **Database**: MongoDB with native driver (no Mongoose)
-- **Module System**: ES Modules (import/export)
-- **API**: RESTful API with JSON responses
-- **Collections**: 
-  - `tasks` collection for task management
-  - `sessions` collection for focus session tracking
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  📋 Tasks          ⏱ Focus          📊 Stats                    │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │  Statistics                                                 │  │
+│  │  Your productivity insights                                  │  │
+│  ├────────────────────────────────────────────────────────────┤  │
+│  │  ┌─────────────────────────────────────────────────────┐   │  │
+│  │  │                    5                                 │   │  │
+│  │  │              Day Streak                              │   │  │
+│  │  │  Consecutive days with at least one completed task   │   │  │
+│  │  └─────────────────────────────────────────────────────┘   │  │
+│  │                                                              │  │
+│  │  ┌──────────────┐  ┌──────────────┐                        │  │
+│  │  │  🎯  12      │  │  ⏰  180     │                        │  │
+│  │  │ Tasks this   │  │ Focus time   │                        │  │
+│  │  │ week         │  │ this week    │                        │  │
+│  │  └──────────────┘  └──────────────┘                        │  │
+│  │                                                              │  │
+│  │  Tasks Completed This Week                                   │  │
+│  │  ████  Mon  Tue  Wed  Thu  Fri  Sat  Sun  (bar chart)       │  │
+│  │                                                              │  │
+│  │  Completion by Time of Day                                  │  │
+│  │  Morning ████  Afternoon ██████  Evening ██                  │  │
+│  └────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
+```
 
-### Frontend Architecture
+---
 
-- **Rendering**: Client-side rendering with vanilla JavaScript
-- **Module System**: ES Modules
-- **Styling**: CSS Modules (separate files per component)
-- **State Management**: Local JavaScript modules
-- **API Communication**: Fetch API for HTTP requests
+### 4.6 Add Task Modal
 
-### Data Flow
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  Add New Task                                              [×]   │
+├──────────────────────────────────────────────────────────────────┤
+│  Task Description                                                │  │
+│  ┌────────────────────────────────────────────────────────────┐ │  │
+│  │ Enter task description                                      │ │  │
+│  └────────────────────────────────────────────────────────────┘ │  │
+│                                                                   │  │
+│  Date                                                             │  │
+│  ┌────────────────────────────────────────────────────────────┐ │  │
+│  │ 2026-02-17                                                  │ │  │
+│  └────────────────────────────────────────────────────────────┘ │  │
+│                                                                   │  │
+│  Duration                                                         │  │
+│  [−]  25 min  [+]                                                │  │
+│                                                                   │  │
+│  Time of Day                                                      │  │
+│  ○ Anytime  ○ Morning  ○ Afternoon  ○ Evening                    │  │
+│                                                                   │  │
+│                    [Cancel]  [Add Task]                           │  │
+└──────────────────────────────────────────────────────────────────┘
+```
 
-1. User interacts with UI
-2. JavaScript module handles event
-3. API module makes HTTP request
-4. Express route processes request
-5. Database module performs CRUD operation
-6. Response sent back to client
-7. UI updates with new data
+---
 
-## Design Principles
+## 5. Design Principles
 
-1. **Simplicity**: Clean, uncluttered interface
-2. **Modularity**: Code organized into logical modules
-3. **Responsiveness**: Works on various screen sizes
-4. **Accessibility**: Uses semantic HTML and standard form elements
-5. **Performance**: Efficient client-side rendering
-6. **Maintainability**: Well-organized code structure
+1. **Simplicity** – Clean, uncluttered interface with minimal cognitive load.
+2. **Execution-focused** – Emphasize starting and completing work over planning.
+3. **Rewarding feedback** – Clear completion states and statistics to motivate users.
+4. **Flexibility** – Focus sessions can be started with or without a linked task.
+5. **Accessibility** – Semantic HTML, ARIA labels, and keyboard-friendly interactions.
+6. **Responsiveness** – Layout adapts to different screen sizes.
+
+---
+
+## 6. Technical Architecture Summary
+
+- **Backend**: Express.js REST API; MongoDB for `tasks` and `sessions` collections.
+- **Frontend**: Vanilla JavaScript (ES modules), client-side rendering.
+- **Styling**: CSS modules (variables, base, navigation, tasks, focus, stats, modal).
+- **Data flow**: User action → JS handler → API fetch → Express route → MongoDB → Response → UI update.
