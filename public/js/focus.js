@@ -98,7 +98,6 @@ function setupEventListeners() {
   const repeatBtn = document.getElementById('repeatBtn');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  const progressBar = document.getElementById('progressBar');
   const volumeSlider = document.getElementById('volumeSlider');
 
   playBtn?.addEventListener('click', togglePlay);
@@ -106,7 +105,6 @@ function setupEventListeners() {
   repeatBtn?.addEventListener('click', toggleRepeat);
   prevBtn?.addEventListener('click', previousTrack);
   nextBtn?.addEventListener('click', nextTrack);
-  progressBar?.addEventListener('click', seekProgress);
   volumeSlider?.addEventListener('click', setVolume);
 }
 
@@ -303,30 +301,12 @@ function resetSession() {
 }
 
 function updateProgress() {
-  // Progress bar: show remaining (drains as countdown)
-  const remainingPercent = totalDuration > 0 ? (remainingSeconds / totalDuration) * 100 : 0;
-  const progressFill = document.getElementById('progressFill');
-  const progressHandle = document.getElementById('progressHandle');
-
-  if (progressFill) progressFill.style.width = remainingPercent + '%';
-  if (progressHandle) progressHandle.style.left = remainingPercent + '%';
-
-  // Countdown display: remaining time
   const countdownEl = document.getElementById('focusCountdown');
   const remainingMins = Math.floor(remainingSeconds / 60);
   const remainingSecs = remainingSeconds % 60;
   if (countdownEl) {
     countdownEl.textContent = `${remainingMins}:${remainingSecs.toString().padStart(2, '0')}`;
   }
-}
-
-function seekProgress(event) {
-  const bar = event.currentTarget;
-  const rect = bar.getBoundingClientRect();
-  const percent = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
-  const newTime = Math.floor((percent / 100) * totalDuration);
-  remainingSeconds = totalDuration - newTime;
-  updateProgress();
 }
 
 function toggleShuffle() {

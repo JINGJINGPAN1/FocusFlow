@@ -238,10 +238,6 @@
   margin-top: 4px;
 }
 
-.progress-bar-wrapper.focus-progress {
-  margin-bottom: 24px;
-}
-
 .progress-bar-wrapper {
   display: flex;
   align-items: center;
