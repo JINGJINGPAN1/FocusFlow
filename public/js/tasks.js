@@ -4,6 +4,7 @@ const PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
 
 let tasks = [];
 let currentFilter = 'all';
+let editingTaskId = null;
 
 export function initTasks() {
   updateDateHeader();
@@ -37,8 +38,30 @@ function setupEventListeners() {
   const sectionAddBtns = document.querySelectorAll('.section-add-btn');
 
   const openModal = (preselectedPeriod = 'anytime') => {
+    editingTaskId = null;
+    setModalMode('add');
+    document.getElementById('taskForm').reset();
     const radio = document.querySelector(`input[name="period"][value="${preselectedPeriod}"]`);
     if (radio) radio.checked = true;
+    resetDurationSelector();
+    document.getElementById('taskModal').style.display = 'flex';
+  };
+
+  const openModalForEdit = (task) => {
+    editingTaskId = task._id;
+    setModalMode('edit');
+    document.getElementById('taskText').value = task.text;
+    const radio = document.querySelector(`input[name="period"][value="${task.period || 'anytime'}"]`);
+    if (radio) radio.checked = true;
+    const duration = task.duration || DURATION_DEFAULT;
+    const hiddenInput = document.getElementById('taskDuration');
+    const displayEl = document.getElementById('durationDisplay');
+    const minusBtn = document.getElementById('durationMinus');
+    const plusBtn = document.getElementById('durationPlus');
+    if (hiddenInput) hiddenInput.value = duration;
+    if (displayEl) displayEl.textContent = `${duration} min`;
+    if (minusBtn) minusBtn.disabled = duration <= DURATION_MIN;
+    if (plusBtn) plusBtn.disabled = duration >= DURATION_MAX;
     document.getElementById('taskModal').style.display = 'flex';
   };
 
@@ -49,6 +72,8 @@ function setupEventListeners() {
       openModal(btn.dataset.period || 'anytime');
     });
   });
+
+  window.openModalForEdit = openModalForEdit;
 
   closeModal?.addEventListener('click', closeTaskModal);
   cancelBtn?.addEventListener('click', closeTaskModal);
@@ -63,12 +88,16 @@ function setupEventListeners() {
     const duration = parseInt(document.getElementById('taskDuration').value, 10) || 25;
 
     try {
-      await api.createTask({ text, period, duration });
+      if (editingTaskId) {
+        await api.updateTask(editingTaskId, { text, period, duration });
+      } else {
+        await api.createTask({ text, period, duration });
+      }
       closeTaskModal();
       await loadTasks();
       e.target.reset();
     } catch (error) {
-      alert('Failed to create task: ' + error.message);
+      alert('Failed to save task: ' + error.message);
     }
   });
 
@@ -86,6 +115,18 @@ const DURATION_MIN = 5;
 const DURATION_MAX = 180;
 const DURATION_STEP = 5;
 const DURATION_DEFAULT = 25;
+
+function setModalMode(mode) {
+  const titleEl = document.getElementById('taskModalTitle');
+  const submitBtn = document.getElementById('taskSubmitBtn');
+  if (mode === 'edit') {
+    if (titleEl) titleEl.textContent = 'Edit Task';
+    if (submitBtn) submitBtn.textContent = 'Save';
+  } else {
+    if (titleEl) titleEl.textContent = 'Add New Task';
+    if (submitBtn) submitBtn.textContent = 'Add Task';
+  }
+}
 
 function setupDurationSelector() {
   const minusBtn = document.getElementById('durationMinus');
@@ -117,6 +158,8 @@ function setupDurationSelector() {
 function closeTaskModal() {
   document.getElementById('taskModal').style.display = 'none';
   document.getElementById('taskForm').reset();
+  editingTaskId = null;
+  setModalMode('add');
   resetDurationSelector();
 }
 
@@ -253,19 +296,11 @@ function attachTaskEventListeners() {
   });
 
   editBtns.forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('click', (e) => {
       const taskId = e.currentTarget.dataset.taskId;
       const task = tasks.find((t) => t._id === taskId);
-      if (task) {
-        const newText = prompt('Edit task:', task.text);
-        if (newText !== null && newText.trim()) {
-          try {
-            await api.updateTask(taskId, { text: newText.trim() });
-            await loadTasks();
-          } catch (error) {
-            alert('Failed to update task: ' + error.message);
-          }
-        }
+      if (task && window.openModalForEdit) {
+        window.openModalForEdit(task);
       }
     });
   });
