@@ -92,6 +92,28 @@ FocusFlow is a productivity application that helps users manage their tasks and 
    http://localhost:3000
    ```
 
+## How to Use
+
+### Tasks Page
+- **Add a task**: Click "+ Add Task" or the "+" next to a time period (Anytime, Morning, Afternoon, Evening). Fill in the description, date, duration, and time of day, then click "Add Task".
+- **Complete a task**: Check the checkbox next to a task to mark it done.
+- **Edit a task**: Click the pencil (✎) icon on a task card.
+- **Delete a task**: Click the trash (🗑) icon and confirm.
+- **Start focus from a task**: Click the play (▶) button on a task to start a focus session with that task's duration.
+- **Filter tasks**: Use "All", "Active", or "Completed" to filter the list.
+- **Change date**: Use the date picker in the header to view tasks for different days.
+
+### Focus Page
+- **Start a session**: Choose a duration (15, 25, 45, or 60 min) or enter a custom value (1–120 min), then click "Start".
+- **During a session**: Click the play (▶) button to start the timer and white noise. Click again to pause.
+- **Adjust volume**: Use the volume slider to control white noise volume.
+- **When complete**: The app shows a completion screen with your focus time. Click "Start Another Session" to begin another session.
+
+### Stats Page
+- **Day Streak**: Consecutive days with at least one completed task.
+- **Weekly metrics**: Tasks completed and focus minutes this week.
+- **Charts**: Bar chart of tasks per weekday; completion by time of day (Morning, Afternoon, Evening).
+
 ### Running Linter and Formatter
 
 ```bash
