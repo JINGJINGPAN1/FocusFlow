@@ -412,3 +412,7 @@ function escapeHtml(text) {
 export function getTaskById(taskId) {
   return tasks.find((t) => t._id === taskId);
 }
+
+export function getSelectedDate() {
+  return selectedDate;
+}

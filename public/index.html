@@ -118,10 +118,27 @@
       <div class="glass-card">
         <div id="noSessionView">
           <div class="no-session-card">
-            <div class="play-icon-large"></div>
-            <div class="no-session-title">No Active Focus Session</div>
-            <div class="no-session-text">
-              Select a task and click the play button to start a focus session
+            <div class=" "></div>
+            <h2 class="no-session-title">Focus Session</h2>
+            <p class="no-session-text">How long do you want to focus?</p>
+            <div class="focus-start-controls">
+              <div class="focus-duration-selector">
+                <div class="focus-duration-btns">
+                  <button type="button" class="focus-duration-btn" data-minutes="15">15</button>
+                  <button type="button" class="focus-duration-btn active" data-minutes="25">25</button>
+                  <button type="button" class="focus-duration-btn" data-minutes="45">45</button>
+                  <button type="button" class="focus-duration-btn" data-minutes="60">60</button>
+                </div>
+                <div class="focus-custom-duration">
+                  <input type="number" id="focusCustomDuration" class="focus-custom-input" min="1" max="120"
+                    placeholder="Custom" aria-label="Custom duration in minutes" />
+                  <span class="focus-custom-suffix">min</span>
+                </div>
+              </div>
+              <button type="button" class="focus-start-btn btn-primary" id="focusStartBtn">
+                <span class="btn-icon">▶</span>
+                <span>Start</span>
+              </button>
             </div>
           </div>
         </div>
@@ -245,9 +262,11 @@
         <div class="form-group">
           <label>Duration</label>
           <div class="duration-selector">
-            <button type="button" class="duration-btn duration-minus" id="durationMinus" aria-label="Decrease duration">−</button>
+            <button type="button" class="duration-btn duration-minus" id="durationMinus"
+              aria-label="Decrease duration">−</button>
             <span class="duration-display" id="durationDisplay">25 min</span>
-            <button type="button" class="duration-btn duration-plus" id="durationPlus" aria-label="Increase duration">+</button>
+            <button type="button" class="duration-btn duration-plus" id="durationPlus"
+              aria-label="Increase duration">+</button>
           </div>
           <input type="hidden" name="duration" id="taskDuration" value="25" />
         </div>

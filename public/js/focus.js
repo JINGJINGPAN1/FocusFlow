@@ -13,9 +13,54 @@ let isRepeat = false;
 let whiteNoiseAudio = null;
 let audioLoopCount = 0;
 
+const FOCUS_DURATION_DEFAULT = 25;
+
 export function initFocus() {
   setupEventListeners();
   initWhiteNoise();
+  setupFocusStartControls();
+}
+
+const FOCUS_DURATION_MIN = 1;
+const FOCUS_DURATION_MAX = 120;
+
+function setupFocusStartControls() {
+  const durationBtns = document.querySelectorAll('.focus-duration-btn');
+  const customInput = document.getElementById('focusCustomDuration');
+  const startBtn = document.getElementById('focusStartBtn');
+
+  durationBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      durationBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (customInput) customInput.value = '';
+    });
+  });
+
+  customInput?.addEventListener('input', () => {
+    if (customInput.value) {
+      durationBtns.forEach((b) => b.classList.remove('active'));
+    }
+  });
+
+  customInput?.addEventListener('focus', () => {
+    durationBtns.forEach((b) => b.classList.remove('active'));
+  });
+
+  startBtn?.addEventListener('click', () => {
+    let minutes = FOCUS_DURATION_DEFAULT;
+    const customVal = customInput?.value?.trim();
+    if (customVal) {
+      const parsed = parseInt(customVal, 10);
+      if (!isNaN(parsed) && parsed >= FOCUS_DURATION_MIN && parsed <= FOCUS_DURATION_MAX) {
+        minutes = parsed;
+      }
+    } else {
+      const activeBtn = document.querySelector('.focus-duration-btn.active');
+      minutes = activeBtn ? parseInt(activeBtn.dataset.minutes, 10) : FOCUS_DURATION_DEFAULT;
+    }
+    startFocusSession(null, 'Focus Session', minutes);
+  });
 }
 
 function initWhiteNoise() {
@@ -76,7 +121,7 @@ export function startFocusSession(taskId, taskName, durationMinutes) {
 
   document.getElementById('noSessionView').style.display = 'none';
   document.getElementById('focusMusicView').style.display = 'block';
-  document.getElementById('currentTaskName').textContent = currentTaskName;
+  document.getElementById('currentTaskName').textContent = currentTaskName || 'Focus Session';
 
   // Use task duration if set, otherwise default to 25 minutes
   const minutes = durationMinutes && durationMinutes > 0 ? durationMinutes : 25;
@@ -112,7 +157,7 @@ function togglePlay() {
     startWhiteNoise();
 
     // Create session if not yet created
-    if (!currentSession && currentTaskId) {
+    if (!currentSession) {
       createSession();
     }
   } else {
@@ -206,8 +251,8 @@ async function completeSession() {
     } catch (error) {
       console.error('Error completing session:', error);
     }
-  } else if (currentTaskId) {
-    // If session wasn't created yet, create it as completed
+  } else {
+    // If session wasn't created yet, create it as completed (works for both task and general focus)
     try {
       await api.createSession({
         taskId: currentTaskId,

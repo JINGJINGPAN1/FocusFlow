@@ -24,13 +24,115 @@
 }
 
 .no-session-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
 .no-session-text {
   color: var(--text-sub);
+  font-size: 15px;
+}
+
+.focus-start-controls {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.focus-duration-selector {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.focus-duration-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.focus-custom-duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.focus-custom-input {
+  width: 100px;
+  padding: 10px 14px;
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 15px;
+  text-align: center;
+}
+
+.focus-custom-input:focus {
+  outline: none;
+  border-color: var(--primary-purple);
+}
+
+.focus-custom-input::placeholder {
+  color: var(--text-sub);
+  opacity: 0.7;
+}
+
+.focus-custom-suffix {
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+.focus-duration-btn {
+  padding: 10px 18px;
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.focus-duration-btn:hover {
+  border-color: var(--primary-purple);
+  background: var(--accent-soft);
+}
+
+.focus-duration-btn.active {
+  border-color: var(--primary-purple);
+  background: var(--primary-purple);
+  color: white;
+}
+
+.focus-start-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary-purple);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(114, 98, 184, 0.3);
+  transition: opacity 0.2s;
+}
+
+.focus-start-btn:hover {
+  opacity: 0.9;
+}
+
+.focus-start-btn .btn-icon {
   font-size: 14px;
 }
 

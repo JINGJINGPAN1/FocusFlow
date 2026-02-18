@@ -43,10 +43,8 @@ router.post('/', async (req, res) => {
   try {
     const { taskId, duration, completed = false } = req.body;
 
-    if (!taskId || !duration) {
-      return res
-        .status(400)
-        .json({ error: 'Task ID and duration are required' });
+    if (!duration) {
+      return res.status(400).json({ error: 'Duration is required' });
     }
 
     if (typeof duration !== 'number' || duration <= 0) {
@@ -55,7 +53,7 @@ router.post('/', async (req, res) => {
 
     const sessionsCollection = getCollection('sessions');
     const newSession = {
-      taskId: taskId,
+      taskId: taskId || null,
       duration: Number(duration),
       completed: Boolean(completed),
       createdAt: new Date(),
