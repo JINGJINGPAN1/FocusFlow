@@ -121,14 +121,12 @@ export function startFocusSession(taskId, taskName, durationMinutes) {
 
   document.getElementById('noSessionView').style.display = 'none';
   document.getElementById('focusMusicView').style.display = 'block';
-  document.getElementById('currentTaskName').textContent = currentTaskName || 'Focus Session';
 
   // Use task duration if set, otherwise default to 25 minutes
   const minutes = durationMinutes && durationMinutes > 0 ? durationMinutes : 25;
   totalDuration = minutes * 60;
   remainingSeconds = totalDuration;
   audioLoopCount = 0;
-  updateTotalTimeDisplay();
   updateProgress();
 
   const playBtn = document.getElementById('masterPlayBtn');
@@ -305,29 +303,20 @@ function resetSession() {
 }
 
 function updateProgress() {
-  const percent = totalDuration > 0 ? ((totalDuration - remainingSeconds) / totalDuration) * 100 : 0;
+  // Progress bar: show remaining (drains as countdown)
+  const remainingPercent = totalDuration > 0 ? (remainingSeconds / totalDuration) * 100 : 0;
   const progressFill = document.getElementById('progressFill');
   const progressHandle = document.getElementById('progressHandle');
-  const currentTimeEl = document.getElementById('currentTime');
 
-  if (progressFill) progressFill.style.width = percent + '%';
-  if (progressHandle) progressHandle.style.left = percent + '%';
+  if (progressFill) progressFill.style.width = remainingPercent + '%';
+  if (progressHandle) progressHandle.style.left = remainingPercent + '%';
 
-  const currentMins = Math.floor((totalDuration - remainingSeconds) / 60);
-  const currentSecs = (totalDuration - remainingSeconds) % 60;
-  if (currentTimeEl) {
-    currentTimeEl.textContent = `${currentMins}:${currentSecs.toString().padStart(2, '0')}`;
-  }
-
-  updateTotalTimeDisplay();
-}
-
-function updateTotalTimeDisplay() {
-  const totalMins = Math.floor(totalDuration / 60);
-  const totalSecs = totalDuration % 60;
-  const totalTimeEl = document.getElementById('totalTime');
-  if (totalTimeEl) {
-    totalTimeEl.textContent = `${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
+  // Countdown display: remaining time
+  const countdownEl = document.getElementById('focusCountdown');
+  const remainingMins = Math.floor(remainingSeconds / 60);
+  const remainingSecs = remainingSeconds % 60;
+  if (countdownEl) {
+    countdownEl.textContent = `${remainingMins}:${remainingSecs.toString().padStart(2, '0')}`;
   }
 }
 
