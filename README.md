@@ -2,11 +2,16 @@
 
 ## Author
 
-[Your Name]
+**Jingjing Pan**  
+Email: pan.jingj@northeastern.edu  
+
+**Yingyi Kong**  
+Email: kong.yin@northeastern.edu  
+
 
 ## Class Link
 
-[Your Class Link]
+[CS5610 Web Development - Northeastern University](https://johnguerra.co/classes/webDevelopment_online_spring_2026/)
 
 ## Project Objective
 
@@ -25,6 +30,10 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 
 - **[Design Document](docs/design-document.md)** – Project description, user personas, user stories, and design mockups
 - **[MongoDB Local Setup](docs/mongodb-local-setup.md)** – Guide for setting up MongoDB locally
+
+## Video Introduction
+
+> **Note:** Click the image above to watch the video on YouTube.
 
 ## Screenshot
 
@@ -226,3 +235,9 @@ FocusFlow/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+For questions or feedback, please contact:
+- Email: pan.jingj@northeastern.edu
+- Email: kong.yin@northeastern.edu  
