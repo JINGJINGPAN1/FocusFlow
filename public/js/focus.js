@@ -65,20 +65,31 @@ function setupEventListeners() {
   volumeSlider?.addEventListener('click', setVolume);
 }
 
-export function startFocusSession(taskId, taskName) {
+export function startFocusSession(taskId, taskName, durationMinutes) {
+  stopProgress();
+  stopWhiteNoise();
+
   currentTaskId = taskId;
   currentTaskName = taskName;
+  currentSession = null;
+  isPlaying = false;
 
   document.getElementById('noSessionView').style.display = 'none';
   document.getElementById('focusMusicView').style.display = 'block';
   document.getElementById('currentTaskName').textContent = currentTaskName;
 
-  // Set default total duration
-  totalDuration = 25 * 60; // 25 minutes
+  // Use task duration if set, otherwise default to 25 minutes
+  const minutes = durationMinutes && durationMinutes > 0 ? durationMinutes : 25;
+  totalDuration = minutes * 60;
   remainingSeconds = totalDuration;
   audioLoopCount = 0;
   updateTotalTimeDisplay();
   updateProgress();
+
+  const playBtn = document.getElementById('masterPlayBtn');
+  const playerWrapper = document.getElementById('playerWrapper');
+  if (playBtn) playBtn.textContent = '▶';
+  if (playerWrapper) playerWrapper.classList.remove('is-playing');
 
   const navTabs = document.querySelectorAll('.nav-tab');
   const pages = document.querySelectorAll('.page');

@@ -261,7 +261,7 @@ function attachTaskEventListeners() {
       const taskId = e.currentTarget.dataset.taskId;
       const task = tasks.find((t) => t._id === taskId);
       if (task && !task.completed) {
-        window.startFocusSession(taskId, task.text);
+        window.startFocusSession(taskId, task.text, task.duration);
       }
     });
   });
