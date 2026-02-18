@@ -5,12 +5,84 @@ export async function initStats() {
   await loadRecentSessions();
 }
 
+function getDateString(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function getWeekStartDate() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(now);
+  monday.setDate(diff);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
+
+function computeWeeklyCompletedTasks(tasks) {
+  const weekStart = getWeekStartDate();
+  const weekStartStr = getDateString(weekStart);
+  const today = new Date();
+  const todayStr = getDateString(today);
+
+  return tasks.filter((t) => {
+    if (!t.completed) return false;
+    const taskDate = t.date || getDateString(new Date(t.updatedAt || t.createdAt));
+    return taskDate >= weekStartStr && taskDate <= todayStr;
+  }).length;
+}
+
+function computeWeeklyFocusTime(sessions) {
+  const weekStart = getWeekStartDate();
+  const weekStartTime = weekStart.getTime();
+
+  return sessions
+    .filter((s) => s.completed && new Date(s.createdAt).getTime() >= weekStartTime)
+    .reduce((sum, s) => sum + (s.duration || 0), 0);
+}
+
+function computeCompletionStreak(tasks) {
+  const completedByDate = new Set();
+  for (const t of tasks) {
+    if (!t.completed) continue;
+    const date = t.date || getDateString(new Date(t.updatedAt || t.createdAt));
+    completedByDate.add(date);
+  }
+
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = getDateString(d);
+    if (completedByDate.has(dateStr)) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 async function loadStats() {
   try {
-    const stats = await api.fetchStats();
-    document.getElementById('sessionsToday').textContent = stats.sessionsToday || 0;
-    document.getElementById('totalMinutes').textContent = stats.totalMinutes || 0;
-    document.getElementById('pomodoros').textContent = stats.pomodoros || 0;
+    const [tasks, sessions] = await Promise.all([
+      api.fetchTasks(),
+      api.fetchSessions(),
+    ]);
+
+    const weeklyCompleted = computeWeeklyCompletedTasks(tasks);
+    const weeklyFocusSeconds = computeWeeklyFocusTime(sessions);
+    const weeklyFocusMinutes = Math.floor(weeklyFocusSeconds / 60);
+    const streak = computeCompletionStreak(tasks);
+
+    const weeklyEl = document.getElementById('weeklyCompletedTasks');
+    const focusEl = document.getElementById('weeklyFocusMinutes');
+    const streakEl = document.getElementById('completionStreak');
+
+    if (weeklyEl) weeklyEl.textContent = weeklyCompleted;
+    if (focusEl) focusEl.textContent = weeklyFocusMinutes;
+    if (streakEl) streakEl.textContent = streak;
   } catch (error) {
     console.error('Error loading stats:', error);
   }
