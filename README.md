@@ -10,87 +10,88 @@
 
 ## Project Objective
 
-FocusFlow is a productivity application that helps users manage their tasks and maintain focus through timed work sessions. The application combines task management with a Pomodoro-style focus timer to help users stay productive and track their work habits.
+FocusFlow is a web-based productivity application that helps users manage tasks and maintain focus through structured, timed work sessions. It combines task management with a Pomodoro-style focus timer, enabling users to organize their work, stay concentrated, and track productivity over time.
+
+The app emphasizes **execution over planning**: users create tasks, choose a focus duration, and start working. Each completed session is recorded and contributes to productivity insights. FocusFlow is designed for students, remote workers, and anyone who wants a simple, distraction-free way to focus and understand how they spend their time.
 
 ### Key Features
 
-- **Task Management**: Create, update, delete, and organize tasks
-- **Focus Sessions**: Start timed focus sessions for specific tasks
-- **Statistics**: Track productivity metrics including sessions completed, total minutes focused, and Pomodoros
-- **Modern UI**: Clean, responsive interface built with vanilla JavaScript
+- **Task Management**: Create, edit, delete, and complete tasks. Organize by date and time of day (Anytime, Morning, Afternoon, Evening).
+- **Focus Sessions**: Start timed focus sessions with preset durations (15, 25, 45, 60 min) or custom length. Optional white noise. Play/pause control.
+- **Session Completion**: Clear completion state with success feedback, duration display, and "Start Another Session" button.
+- **Statistics**: Day streak, weekly completed tasks, weekly focus minutes, bar chart by weekday, and completion by time of day.
+
+## Documentation
+
+- **[Design Document](docs/design-document.md)** – Project description, user personas, user stories, and design mockups
+- **[MongoDB Local Setup](docs/mongodb-local-setup.md)** – Guide for setting up MongoDB locally
 
 ## Screenshot
 
 ![FocusFlow Application Screenshot](docs/screenshot.png)
 
-## Technology Stack
-
-- **Backend**: Node.js + Express.js
-- **Database**: MongoDB (native driver, no Mongoose)
-- **Frontend**: HTML5 + Vanilla JavaScript (client-side rendering)
-- **Styling**: CSS Modules
-- **Module System**: ES Modules (ESM)
+*Main interface with Tasks, Focus, and Stats tabs. Place your app screenshot at `docs/screenshot.png`.*
 
 ## Instructions to Build
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or MongoDB Atlas account)
+- **Node.js** v18 or higher ([nodejs.org](https://nodejs.org))
+- **MongoDB** – local installation or [MongoDB Atlas](https://www.mongodb.com/atlas) account
 
-### Installation Steps
+### Step 1: Clone and Install
 
-1. **Clone or navigate to the project directory**
-   ```bash
-   cd focusflow-app
-   ```
+```bash
+# Navigate to the project directory
+cd FocusFlow
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
+```
 
-3. **Set up environment variables**
-   
-   Create a `.env` file in the root directory:
-   ```env
-   MONGODB_URI=mongodb://localhost:27017
-   DB_NAME=focusflow
-   PORT=3000
-   ```
-   
-   For MongoDB Atlas, use:
-   ```env
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net
-   DB_NAME=focusflow
-   PORT=3000
-   ```
+### Step 2: Configure Environment
 
-4. **Start MongoDB**
-   
-   If using local MongoDB:
-   ```bash
-   mongod
-   ```
-   
-   Or ensure your MongoDB Atlas cluster is running.
+Create a `.env` file in the project root:
 
-5. **Start the application**
-   ```bash
-   npm start
-   ```
-   
-   For development with auto-reload:
-   ```bash
-   npm run dev
-   ```
+**Local MongoDB:**
+```env
+MONGODB_URI=mongodb://localhost:27017
+DB_NAME=focusflow
+PORT=3000
+```
 
-6. **Access the application**
-   
-   Open your browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
+**MongoDB Atlas:**
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net
+DB_NAME=focusflow
+PORT=3000
+```
+
+### Step 3: Start MongoDB
+
+**Local:** Ensure MongoDB is running (e.g., `mongod` or via your system service). See [MongoDB Local Setup](docs/mongodb-local-setup.md) for detailed instructions.
+
+**Atlas:** Ensure your cluster is running and the connection string is correct.
+
+### Step 4: Run the Application
+
+```bash
+# Start the server
+npm start
+```
+
+For development with auto-reload:
+```bash
+npm run dev
+```
+
+### Step 5: Access the App
+
+Open your browser and go to:
+
+```
+http://localhost:3000
+```
 
 ## How to Use
 
@@ -124,10 +125,18 @@ npm run lint
 npm run format
 ```
 
+## Technology Stack
+
+- **Backend**: Node.js + Express.js
+- **Database**: MongoDB (native driver, no Mongoose)
+- **Frontend**: HTML5 + Vanilla JavaScript (client-side rendering)
+- **Styling**: CSS Modules
+- **Module System**: ES Modules (ESM)
+
 ## Project Structure
 
 ```
-focusflow-app/
+FocusFlow/
 ├── src/
 │   └── server/
 │       ├── db/
