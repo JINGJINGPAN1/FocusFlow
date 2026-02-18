@@ -66,7 +66,7 @@ function computeCompletionStreak(tasks) {
 function computeTasksPerDay(tasks) {
   const weekStart = getWeekStartDate();
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const result = dayNames.map((name, i) => ({ day: name, count: 0 }));
+  const result = dayNames.map((name) => ({ day: name, count: 0 }));
 
   for (const t of tasks) {
     if (!t.completed) continue;

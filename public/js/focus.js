@@ -6,10 +6,8 @@ let remainingSeconds = 0;
 let totalDuration = 25 * 60; // 25 minutes default
 let isPlaying = false;
 let currentTaskId = null;
-let currentTaskName = '';
 let volume = 70;
 let whiteNoiseAudio = null;
-let audioLoopCount = 0;
 
 const FOCUS_DURATION_DEFAULT = 25;
 
@@ -84,7 +82,6 @@ function initWhiteNoise() {
 function handleAudioEnded() {
   // If focus duration exceeds 60 minutes and still playing, auto loop
   if (totalDuration > 60 * 60 && isPlaying && remainingSeconds > 0) {
-    audioLoopCount++;
     if (whiteNoiseAudio) {
       whiteNoiseAudio.currentTime = 0;
       whiteNoiseAudio.play().catch((error) => {
@@ -102,12 +99,11 @@ function setupEventListeners() {
   volumeSlider?.addEventListener('click', setVolume);
 }
 
-export function startFocusSession(taskId, taskName, durationMinutes) {
+export function startFocusSession(taskId, _taskName, durationMinutes) {
   stopProgress();
   stopWhiteNoise();
 
   currentTaskId = taskId;
-  currentTaskName = taskName;
   currentSession = null;
   isPlaying = false;
 
@@ -118,7 +114,6 @@ export function startFocusSession(taskId, taskName, durationMinutes) {
   const minutes = durationMinutes && durationMinutes > 0 ? durationMinutes : 25;
   totalDuration = minutes * 60;
   remainingSeconds = totalDuration;
-  audioLoopCount = 0;
   updateProgress();
 
   const playBtn = document.getElementById('masterPlayBtn');
@@ -261,8 +256,6 @@ function showCompleteView(completedSeconds) {
   currentSession = null;
   isPlaying = false;
   currentTaskId = null;
-  currentTaskName = '';
-  audioLoopCount = 0;
 
   const playBtn = document.getElementById('masterPlayBtn');
   const playerWrapper = document.getElementById('playerWrapper');
@@ -310,8 +303,6 @@ function resetSession() {
   remainingSeconds = totalDuration;
   isPlaying = false;
   currentTaskId = null;
-  currentTaskName = '';
-  audioLoopCount = 0;
 
   stopProgress();
   stopWhiteNoise();
