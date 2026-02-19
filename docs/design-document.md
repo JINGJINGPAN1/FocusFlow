@@ -8,12 +8,12 @@ Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **ex
 
 ### Core Features
 
-| Feature | Description |
-|--------|-------------|
-| **Task Management** | Create, edit, delete, and complete tasks. Organize by date and time of day (Anytime, Morning, Afternoon, Evening). |
-| **Focus Sessions** | Start timed focus sessions with preset durations (15, 25, 45, 60 min) or custom length. Optional white noise. Play/pause control. |
-| **Session Completion** | Clear completion state with success feedback, duration display, and "Start Another Session" button. |
-| **Statistics** | Day streak, weekly completed tasks, weekly focus minutes, bar chart by weekday, and completion by time of day. |
+| Feature                | Description                                                                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Task Management**    | Create, edit, delete, and complete tasks. Organize by date and time of day (Anytime, Morning, Afternoon, Evening).                |
+| **Focus Sessions**     | Start timed focus sessions with preset durations (15, 25, 45, 60 min) or custom length. Optional white noise. Play/pause control. |
+| **Session Completion** | Clear completion state with success feedback, duration display, and "Start Another Session" button.                               |
+| **Statistics**         | Day streak, weekly completed tasks, weekly focus minutes, bar chart by weekday, and completion by time of day.                    |
 
 ### Technology Stack
 
@@ -30,11 +30,12 @@ Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **ex
 
 **Age**: 22  
 **Occupation**: College Student  
-**Tech Savviness**: High  
+**Tech Savviness**: High
 
 **Goals**: Manage coursework, study for exams, and complete assignments on time.
 
 **Pain Points**:
+
 - Struggles to stay focused during long study sessions
 - Loses track of assignments across multiple classes
 - Has no clear way to measure study productivity
@@ -47,11 +48,12 @@ Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **ex
 
 **Age**: 35  
 **Occupation**: Software Developer (Remote)  
-**Tech Savviness**: Very High  
+**Tech Savviness**: Very High
 
 **Goals**: Stay productive at home, manage multiple projects, and maintain deep work periods.
 
 **Pain Points**:
+
 - Distractions at home (family, notifications)
 - Difficulty tracking time spent on different projects
 - Needs structured work intervals and breaks
@@ -64,11 +66,12 @@ Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **ex
 
 **Age**: 24  
 **Occupation**: Graduate Student  
-**Tech Savviness**: Medium  
+**Tech Savviness**: Medium
 
 **Goals**: Overcome procrastination and build consistent study habits.
 
 **Pain Points**:
+
 - Hard to start tasks; often feels overwhelmed
 - Benefits from short, structured sessions rather than long blocks
 - Wants visible progress to stay motivated
@@ -79,12 +82,12 @@ Unlike calendar-based tools that emphasize scheduling, FocusFlow centers on **ex
 
 ## 3. User Stories
 
-User stories are written in narrative form: *As a [role], I want to [action], so that [benefit].*
+User stories are written in narrative form: _As a [role], I want to [action], so that [benefit]._
 
 ### Task Management
 
 **Story 1: Creating a Task**  
-*As a student, I want to create a task with a description, date, duration, and time of day, so that I can organize what I need to work on and when.*
+_As a student, I want to create a task with a description, date, duration, and time of day, so that I can organize what I need to work on and when._
 
 - User clicks "+ Add Task" or the "+" in a period section.
 - A modal opens with fields: task description, date, duration (5–180 min), and time of day (Anytime, Morning, Afternoon, Evening).
@@ -92,7 +95,7 @@ User stories are written in narrative form: *As a [role], I want to [action], so
 - The progress ring and filter counts update.
 
 **Story 2: Viewing and Filtering Tasks**  
-*As a user, I want to view my tasks and filter by All, Active, or Completed, so that I can focus on what matters right now.*
+_As a user, I want to view my tasks and filter by All, Active, or Completed, so that I can focus on what matters right now._
 
 - Tasks are grouped by time of day (Anytime, Morning, Afternoon, Evening).
 - Filter buttons show counts and toggle the visible task list.
@@ -100,20 +103,20 @@ User stories are written in narrative form: *As a [role], I want to [action], so
 - A progress ring shows daily completion (e.g., 2/5 tasks).
 
 **Story 3: Completing a Task**  
-*As a user, I want to mark a task as completed, so that I can track my progress and feel a sense of accomplishment.*
+_As a user, I want to mark a task as completed, so that I can track my progress and feel a sense of accomplishment._
 
 - User checks the checkbox next to a task.
 - The task is marked completed and moves to the completed filter.
 - The progress ring and period progress update.
 
 **Story 4: Editing and Deleting a Task**  
-*As a user, I want to edit or delete tasks, so that I can keep my list accurate and up to date.*
+_As a user, I want to edit or delete tasks, so that I can keep my list accurate and up to date._
 
 - Edit: User clicks the edit button, modal opens with current values, user saves changes.
 - Delete: User clicks delete, confirmation dialog appears, task is removed on confirm.
 
 **Story 5: Starting Focus from a Task**  
-*As a student, I want to start a focus session for a specific task, so that I can concentrate on one thing at a time.*
+_As a student, I want to start a focus session for a specific task, so that I can concentrate on one thing at a time._
 
 - User clicks the play (▶) button on a task card.
 - The app navigates to the Focus page and starts a session with the task’s duration.
@@ -124,7 +127,7 @@ User stories are written in narrative form: *As a [role], I want to [action], so
 ### Focus Sessions
 
 **Story 6: Starting a Focus Session**  
-*As a user, I want to choose a duration and start a focus session anytime, so that I can focus even when I don’t have a specific task.*
+_As a user, I want to choose a duration and start a focus session anytime, so that I can focus even when I don’t have a specific task._
 
 - User goes to the Focus tab and sees "Focus Session" with "How long do you want to focus?"
 - User selects a preset (15, 25, 45, 60 min) or enters a custom duration.
@@ -132,14 +135,14 @@ User stories are written in narrative form: *As a [role], I want to [action], so
 - User clicks play to start the timer and optional white noise.
 
 **Story 7: Pausing and Resuming a Focus Session**  
-*As a user, I want to pause and resume a focus session, so that I can take breaks when needed without losing my place.*
+_As a user, I want to pause and resume a focus session, so that I can take breaks when needed without losing my place._
 
 - User clicks the play/pause button to toggle.
 - When paused, the timer stops and white noise stops.
 - When resumed, both continue from where they left off.
 
 **Story 8: Completing a Focus Session**  
-*As a user, I want to see a clear completion state when a session ends, so that I feel rewarded and know what I achieved.*
+_As a user, I want to see a clear completion state when a session ends, so that I feel rewarded and know what I achieved._
 
 - When the timer reaches zero, the completion view appears.
 - User sees a success icon, "Session Complete," the completed duration (e.g., "25 min"), and "You focused for 25 minutes."
@@ -150,7 +153,7 @@ User stories are written in narrative form: *As a [role], I want to [action], so
 ### Statistics
 
 **Story 9: Viewing Productivity Statistics**  
-*As a user, I want to see my productivity statistics, so that I can understand my habits and improve over time.*
+_As a user, I want to see my productivity statistics, so that I can understand my habits and improve over time._
 
 - User navigates to the Stats tab.
 - User sees: day streak, weekly completed tasks, weekly focus minutes.

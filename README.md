@@ -3,11 +3,10 @@
 ## Author
 
 **Jingjing Pan**  
-Email: pan.jingj@northeastern.edu  
+Email: pan.jingj@northeastern.edu
 
 **Yingyi Kong**  
-Email: kong.yin@northeastern.edu  
-
+Email: kong.yin@northeastern.edu
 
 ## Class Link
 
@@ -39,7 +38,7 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 
 ![FocusFlow Application Screenshot](docs/screenshot.png)
 
-*Main interface with Tasks, Focus, and Stats tabs. Place your app screenshot at `docs/screenshot.png`.*
+_Main interface with Tasks, Focus, and Stats tabs. Place your app screenshot at `docs/screenshot.png`._
 
 ## Instructions to Build
 
@@ -63,6 +62,7 @@ npm install
 Create a `.env` file in the project root:
 
 **Local MongoDB:**
+
 ```env
 MONGODB_URI=mongodb://localhost:27017
 DB_NAME=focusflow
@@ -70,6 +70,7 @@ PORT=3000
 ```
 
 **MongoDB Atlas:**
+
 ```env
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net
 DB_NAME=focusflow
@@ -90,6 +91,7 @@ npm start
 ```
 
 For development with auto-reload:
+
 ```bash
 npm run dev
 ```
@@ -105,6 +107,7 @@ http://localhost:3000
 ## How to Use
 
 ### Tasks Page
+
 - **Add a task**: Click "+ Add Task" or the "+" next to a time period (Anytime, Morning, Afternoon, Evening). Fill in the description, date, duration, and time of day, then click "Add Task".
 - **Complete a task**: Check the checkbox next to a task to mark it done.
 - **Edit a task**: Click the pencil (✎) icon on a task card.
@@ -114,12 +117,14 @@ http://localhost:3000
 - **Change date**: Use the date picker in the header to view tasks for different days.
 
 ### Focus Page
+
 - **Start a session**: Choose a duration (15, 25, 45, or 60 min) or enter a custom value (1–120 min), then click "Start".
 - **During a session**: Click the play (▶) button to start the timer and white noise. Click again to pause.
 - **Adjust volume**: Use the volume slider to control white noise volume.
 - **When complete**: The app shows a completion screen with your focus time. Click "Start Another Session" to begin another session.
 
 ### Stats Page
+
 - **Day Streak**: Consecutive days with at least one completed task.
 - **Weekly metrics**: Tasks completed and focus minutes this week.
 - **Charts**: Bar chart of tasks per weekday; completion by time of day (Morning, Afternoon, Evening).
@@ -230,7 +235,7 @@ FocusFlow/
 ✅ Prettier configuration  
 ✅ MIT License  
 ✅ Proper code organization  
-✅ No exposed credentials (uses environment variables)  
+✅ No exposed credentials (uses environment variables)
 
 ## License
 
@@ -239,5 +244,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact
 
 For questions or feedback, please contact:
+
 - Email: pan.jingj@northeastern.edu
-- Email: kong.yin@northeastern.edu  
+- Email: kong.yin@northeastern.edu

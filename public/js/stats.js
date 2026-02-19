@@ -5,7 +5,10 @@ export async function initStats() {
 }
 
 function getDateString(d) {
-  return d.toISOString().slice(0, 10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 function getWeekStartDate() {
@@ -26,7 +29,8 @@ function computeWeeklyCompletedTasks(tasks) {
 
   return tasks.filter((t) => {
     if (!t.completed) return false;
-    const taskDate = t.date || getDateString(new Date(t.updatedAt || t.createdAt));
+    const taskDate =
+      t.date || getDateString(new Date(t.updatedAt || t.createdAt));
     return taskDate >= weekStartStr && taskDate <= todayStr;
   }).length;
 }
@@ -36,7 +40,9 @@ function computeWeeklyFocusTime(sessions) {
   const weekStartTime = weekStart.getTime();
 
   return sessions
-    .filter((s) => s.completed && new Date(s.createdAt).getTime() >= weekStartTime)
+    .filter(
+      (s) => s.completed && new Date(s.createdAt).getTime() >= weekStartTime
+    )
     .reduce((sum, s) => sum + (s.duration || 0), 0);
 }
 
@@ -70,7 +76,8 @@ function computeTasksPerDay(tasks) {
 
   for (const t of tasks) {
     if (!t.completed) continue;
-    const taskDate = t.date || getDateString(new Date(t.updatedAt || t.createdAt));
+    const taskDate =
+      t.date || getDateString(new Date(t.updatedAt || t.createdAt));
     const d = new Date(taskDate + 'T12:00:00');
     const diffDays = Math.floor((d - weekStart) / (24 * 60 * 60 * 1000));
     if (diffDays >= 0 && diffDays < 7) {
@@ -91,9 +98,21 @@ function computePeriodDistribution(tasks) {
   }
 
   return [
-    { label: 'Morning', count: counts.morning, percent: total > 0 ? (counts.morning / total) * 100 : 0 },
-    { label: 'Afternoon', count: counts.afternoon, percent: total > 0 ? (counts.afternoon / total) * 100 : 0 },
-    { label: 'Evening', count: counts.evening, percent: total > 0 ? (counts.evening / total) * 100 : 0 },
+    {
+      label: 'Morning',
+      count: counts.morning,
+      percent: total > 0 ? (counts.morning / total) * 100 : 0,
+    },
+    {
+      label: 'Afternoon',
+      count: counts.afternoon,
+      percent: total > 0 ? (counts.afternoon / total) * 100 : 0,
+    },
+    {
+      label: 'Evening',
+      count: counts.evening,
+      percent: total > 0 ? (counts.evening / total) * 100 : 0,
+    },
   ];
 }
 

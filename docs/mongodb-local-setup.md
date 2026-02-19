@@ -52,6 +52,7 @@ mongod
 ## Configure Project to Use Local MongoDB
 
 1. **Ensure .env file exists** (already created in project root)
+
    ```
    MONGODB_URI=mongodb://localhost:27017
    DB_NAME=focusflow
@@ -59,6 +60,7 @@ mongod
    ```
 
 2. **Start MongoDB** (if not already running)
+
    ```bash
    brew services start mongodb-community
    ```
@@ -77,6 +79,7 @@ mongod
 **Error**: `Failed to connect to MongoDB`
 
 **Solutions**:
+
 1. Check if MongoDB is running:
    ```bash
    brew services list | grep mongodb
@@ -93,6 +96,7 @@ mongod
 ### Permission Errors
 
 If you encounter permission issues:
+
 ```bash
 # Ensure data directory has correct permissions
 sudo chown -R $(whoami) /usr/local/var/mongodb

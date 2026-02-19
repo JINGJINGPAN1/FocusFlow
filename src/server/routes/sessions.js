@@ -48,7 +48,9 @@ router.post('/', async (req, res) => {
     }
 
     if (typeof duration !== 'number' || duration <= 0) {
-      return res.status(400).json({ error: 'Duration must be a positive number' });
+      return res
+        .status(400)
+        .json({ error: 'Duration must be a positive number' });
     }
 
     const sessionsCollection = getCollection('sessions');
@@ -61,7 +63,9 @@ router.post('/', async (req, res) => {
     };
 
     const result = await sessionsCollection.insertOne(newSession);
-    const session = await sessionsCollection.findOne({ _id: result.insertedId });
+    const session = await sessionsCollection.findOne({
+      _id: result.insertedId,
+    });
 
     res.status(201).json(session);
   } catch (error) {
@@ -87,7 +91,9 @@ router.put('/:id', async (req, res) => {
 
     if (duration !== undefined) {
       if (typeof duration !== 'number' || duration <= 0) {
-        return res.status(400).json({ error: 'Duration must be a positive number' });
+        return res
+          .status(400)
+          .json({ error: 'Duration must be a positive number' });
       }
       updateData.duration = Number(duration);
     }
@@ -144,11 +150,10 @@ router.get('/stats/summary', async (req, res) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const sessionsToday = await sessionsCollection
-      .countDocuments({
-        createdAt: { $gte: today },
-        completed: true,
-      });
+    const sessionsToday = await sessionsCollection.countDocuments({
+      createdAt: { $gte: today },
+      completed: true,
+    });
 
     const totalSessions = await sessionsCollection.countDocuments({
       completed: true,

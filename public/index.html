@@ -1,324 +1,455 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusFlow - Task & Focus Management</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FocusFlow - Task & Focus Management</title>
-  <link rel="stylesheet" href="/css/main.css" />
-</head>
+  <body>
+    <div class="container">
+      <!-- Top Navigation -->
+      <nav class="top-nav">
+        <button class="nav-tab active" data-page="tasks">
+          <span class="nav-icon">📋</span>
+          <span>Tasks</span>
+        </button>
+        <button class="nav-tab" data-page="focus">
+          <span class="nav-icon">⏱</span>
+          <span>Focus</span>
+        </button>
+        <button class="nav-tab" data-page="stats">
+          <span class="nav-icon">📊</span>
+          <span>Stats</span>
+        </button>
+      </nav>
 
-<body>
-  <div class="container">
-    <!-- Top Navigation -->
-    <nav class="top-nav">
-      <button class="nav-tab active" data-page="tasks">
-        <span class="nav-icon">📋</span>
-        <span>Tasks</span>
-      </button>
-      <button class="nav-tab" data-page="focus">
-        <span class="nav-icon">⏱</span>
-        <span>Focus</span>
-      </button>
-      <button class="nav-tab" data-page="stats">
-        <span class="nav-icon">📊</span>
-        <span>Stats</span>
-      </button>
-    </nav>
+      <!-- Tasks Page -->
+      <div id="tasksPage" class="page active">
+        <div class="glass-card">
+          <header class="tasks-date-header">
+            <div class="tasks-date-left">
+              <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
+              <input
+                type="date"
+                id="tasksDatePicker"
+                class="tasks-date-picker"
+              />
+            </div>
+            <div class="daily-progress-ring">
+              <div class="progress-ring-wrapper">
+                <svg
+                  class="progress-ring-svg"
+                  viewBox="0 0 120 120"
+                  width="80"
+                  height="80"
+                >
+                  <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                  <circle
+                    class="progress-ring-fill"
+                    cx="60"
+                    cy="60"
+                    r="52"
+                    id="progressRingFill"
+                  />
+                </svg>
+                <span class="progress-ring-text" id="progressRingPercent"
+                  >0%</span
+                >
+              </div>
+              <p class="progress-ring-label" id="progressRingLabel">
+                0 / 0 tasks
+              </p>
+            </div>
+          </header>
 
-    <!-- Tasks Page -->
-    <div id="tasksPage" class="page active">
-      <div class="glass-card">
-        <header class="tasks-date-header">
-          <div class="tasks-date-left">
-            <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
-            <input type="date" id="tasksDatePicker" class="tasks-date-picker" />
+          <div class="page-header">
+            <div>
+              <h1>Tasks</h1>
+            </div>
+            <button class="add-task-btn" id="addTaskBtn">
+              <span>+</span>
+              <span>Add Task</span>
+            </button>
           </div>
-          <div class="daily-progress-ring">
-            <div class="progress-ring-wrapper">
-              <svg class="progress-ring-svg" viewBox="0 0 120 120" width="80" height="80">
-                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
-                <circle class="progress-ring-fill" cx="60" cy="60" r="52" id="progressRingFill" />
-              </svg>
-              <span class="progress-ring-text" id="progressRingPercent">0%</span>
-            </div>
-            <p class="progress-ring-label" id="progressRingLabel">0 / 0 tasks</p>
+
+          <div class="filter-nav">
+            <button class="filter-item active" data-filter="all">
+              All (<span id="allCount">0</span>)
+            </button>
+            <button class="filter-item" data-filter="active">
+              Active (<span id="activeCount">0</span>)
+            </button>
+            <button class="filter-item" data-filter="completed">
+              Completed (<span id="completedCount">0</span>)
+            </button>
           </div>
-        </header>
 
-        <div class="page-header">
-          <div>
-            <h1>Tasks</h1>
+          <div class="tasks-by-period" id="tasksByPeriod">
+            <section class="period-section" data-period="anytime">
+              <div class="period-section-header">
+                <div class="period-header-left">
+                  <h3 class="period-title">Anytime</h3>
+                  <span class="period-progress" data-period="anytime"
+                    >0 / 0</span
+                  >
+                </div>
+                <button
+                  class="section-add-btn"
+                  data-period="anytime"
+                  title="Add task"
+                >
+                  +
+                </button>
+              </div>
+              <ul class="todo-list" data-period="anytime"></ul>
+            </section>
+            <section class="period-section" data-period="morning">
+              <div class="period-section-header">
+                <div class="period-header-left">
+                  <h3 class="period-title">Morning</h3>
+                  <span class="period-progress" data-period="morning"
+                    >0 / 0</span
+                  >
+                </div>
+                <button
+                  class="section-add-btn"
+                  data-period="morning"
+                  title="Add task"
+                >
+                  +
+                </button>
+              </div>
+              <ul class="todo-list" data-period="morning"></ul>
+            </section>
+            <section class="period-section" data-period="afternoon">
+              <div class="period-section-header">
+                <div class="period-header-left">
+                  <h3 class="period-title">Afternoon</h3>
+                  <span class="period-progress" data-period="afternoon"
+                    >0 / 0</span
+                  >
+                </div>
+                <button
+                  class="section-add-btn"
+                  data-period="afternoon"
+                  title="Add task"
+                >
+                  +
+                </button>
+              </div>
+              <ul class="todo-list" data-period="afternoon"></ul>
+            </section>
+            <section class="period-section" data-period="evening">
+              <div class="period-section-header">
+                <div class="period-header-left">
+                  <h3 class="period-title">Evening</h3>
+                  <span class="period-progress" data-period="evening"
+                    >0 / 0</span
+                  >
+                </div>
+                <button
+                  class="section-add-btn"
+                  data-period="evening"
+                  title="Add task"
+                >
+                  +
+                </button>
+              </div>
+              <ul class="todo-list" data-period="evening"></ul>
+            </section>
           </div>
-          <button class="add-task-btn" id="addTaskBtn">
-            <span>+</span>
-            <span>Add Task</span>
-          </button>
-        </div>
-
-        <div class="filter-nav">
-          <button class="filter-item active" data-filter="all">
-            All (<span id="allCount">0</span>)
-          </button>
-          <button class="filter-item" data-filter="active">
-            Active (<span id="activeCount">0</span>)
-          </button>
-          <button class="filter-item" data-filter="completed">
-            Completed (<span id="completedCount">0</span>)
-          </button>
-        </div>
-
-        <div class="tasks-by-period" id="tasksByPeriod">
-          <section class="period-section" data-period="anytime">
-            <div class="period-section-header">
-              <div class="period-header-left">
-                <h3 class="period-title">Anytime</h3>
-                <span class="period-progress" data-period="anytime">0 / 0</span>
-              </div>
-              <button class="section-add-btn" data-period="anytime" title="Add task">+</button>
-            </div>
-            <ul class="todo-list" data-period="anytime"></ul>
-          </section>
-          <section class="period-section" data-period="morning">
-            <div class="period-section-header">
-              <div class="period-header-left">
-                <h3 class="period-title">Morning</h3>
-                <span class="period-progress" data-period="morning">0 / 0</span>
-              </div>
-              <button class="section-add-btn" data-period="morning" title="Add task">+</button>
-            </div>
-            <ul class="todo-list" data-period="morning"></ul>
-          </section>
-          <section class="period-section" data-period="afternoon">
-            <div class="period-section-header">
-              <div class="period-header-left">
-                <h3 class="period-title">Afternoon</h3>
-                <span class="period-progress" data-period="afternoon">0 / 0</span>
-              </div>
-              <button class="section-add-btn" data-period="afternoon" title="Add task">+</button>
-            </div>
-            <ul class="todo-list" data-period="afternoon"></ul>
-          </section>
-          <section class="period-section" data-period="evening">
-            <div class="period-section-header">
-              <div class="period-header-left">
-                <h3 class="period-title">Evening</h3>
-                <span class="period-progress" data-period="evening">0 / 0</span>
-              </div>
-              <button class="section-add-btn" data-period="evening" title="Add task">+</button>
-            </div>
-            <ul class="todo-list" data-period="evening"></ul>
-          </section>
         </div>
       </div>
-    </div>
 
-    <!-- Focus Page -->
-    <div id="focusPage" class="page">
-      <div class="glass-card">
-        <div id="noSessionView">
-          <div class="no-session-card">
-            <h2 class="no-session-title">Focus Session</h2>
-            <p class="no-session-text">How long do you want to focus?</p>
-            <div class="focus-start-controls">
-              <div class="focus-duration-selector">
-                <div class="focus-duration-btns">
-                  <button type="button" class="focus-duration-btn" data-minutes="15">15</button>
-                  <button type="button" class="focus-duration-btn active" data-minutes="25">25</button>
-                  <button type="button" class="focus-duration-btn" data-minutes="45">45</button>
-                  <button type="button" class="focus-duration-btn" data-minutes="60">60</button>
+      <!-- Focus Page -->
+      <div id="focusPage" class="page">
+        <div class="glass-card">
+          <div id="noSessionView">
+            <div class="no-session-card">
+              <h2 class="no-session-title">Focus Session</h2>
+              <p class="no-session-text">How long do you want to focus?</p>
+              <div class="focus-start-controls">
+                <div class="focus-duration-selector">
+                  <div class="focus-duration-btns">
+                    <button
+                      type="button"
+                      class="focus-duration-btn"
+                      data-minutes="15"
+                    >
+                      15
+                    </button>
+                    <button
+                      type="button"
+                      class="focus-duration-btn active"
+                      data-minutes="25"
+                    >
+                      25
+                    </button>
+                    <button
+                      type="button"
+                      class="focus-duration-btn"
+                      data-minutes="45"
+                    >
+                      45
+                    </button>
+                    <button
+                      type="button"
+                      class="focus-duration-btn"
+                      data-minutes="60"
+                    >
+                      60
+                    </button>
+                  </div>
+                  <div class="focus-custom-duration">
+                    <input
+                      type="number"
+                      id="focusCustomDuration"
+                      class="focus-custom-input"
+                      min="1"
+                      max="120"
+                      placeholder="Custom"
+                      aria-label="Custom duration in minutes"
+                    />
+                    <span class="focus-custom-suffix">min</span>
+                  </div>
                 </div>
-                <div class="focus-custom-duration">
-                  <input type="number" id="focusCustomDuration" class="focus-custom-input" min="1" max="120"
-                    placeholder="Custom" aria-label="Custom duration in minutes" />
-                  <span class="focus-custom-suffix">min</span>
-                </div>
+                <button
+                  type="button"
+                  class="focus-start-btn btn-primary"
+                  id="focusStartBtn"
+                >
+                  <span class="btn-icon">▶</span>
+                  <span>Start</span>
+                </button>
               </div>
-              <button type="button" class="focus-start-btn btn-primary" id="focusStartBtn">
-                <span class="btn-icon">▶</span>
-                <span>Start</span>
+            </div>
+          </div>
+
+          <!-- Session Complete view -->
+          <div
+            id="focusCompleteView"
+            class="focus-complete-wrapper"
+            style="display: none"
+          >
+            <div class="focus-complete-card">
+              <div class="focus-complete-icon" aria-hidden="true">✓</div>
+              <h2 class="focus-complete-title">Session Complete</h2>
+              <div class="focus-complete-time" id="focusCompletedTime">
+                25 min
+              </div>
+              <p class="focus-complete-subtitle" id="focusCompletedSubtitle">
+                You focused for 25 minutes
+              </p>
+              <button
+                type="button"
+                class="focus-complete-btn"
+                id="focusStartAgainBtn"
+              >
+                Start Another Session
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- Session Complete view -->
-        <div id="focusCompleteView" class="focus-complete-wrapper" style="display: none">
-          <div class="focus-complete-card">
-            <div class="focus-complete-icon" aria-hidden="true">✓</div>
-            <h2 class="focus-complete-title">Session Complete</h2>
-            <div class="focus-complete-time" id="focusCompletedTime">25 min</div>
-            <p class="focus-complete-subtitle" id="focusCompletedSubtitle">You focused for 25 minutes</p>
-            <button type="button" class="focus-complete-btn" id="focusStartAgainBtn">
-              Start Another Session
+          <!-- Music view -->
+          <div id="focusMusicView" style="display: none">
+            <!-- Hidden audio element for white noise playback -->
+            <audio id="whiteNoiseAudio">
+              <source src="/white_noise/39-Rain-60min.mp3" type="audio/mpeg" />
+            </audio>
+
+            <h2 style="text-align: center; margin-bottom: 8px">Focus Music</h2>
+            <p
+              class="sub-header"
+              style="text-align: center; margin-bottom: 24px"
+            >
+              Play music to help you concentrate
+            </p>
+
+            <div class="player-wrapper" id="playerWrapper">
+              <div class="tonearm"></div>
+              <div class="vinyl-record">
+                <div class="album-art"></div>
+              </div>
+            </div>
+
+            <div class="pagination-dots">
+              <span class="dot"></span>
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
+
+            <div class="focus-countdown-section">
+              <div class="focus-countdown-display" id="focusCountdown">
+                25:00
+              </div>
+              <p class="focus-countdown-label" id="focusCountdownLabel">
+                remaining
+              </p>
+            </div>
+
+            <div class="playback-controls">
+              <button
+                class="play-btn"
+                id="masterPlayBtn"
+                aria-label="Start / Pause"
+              >
+                ▶
+              </button>
+            </div>
+
+            <div class="volume-control">
+              <span class="nav-icon">🔊</span>
+              <div class="volume-slider-wrapper" id="volumeSlider">
+                <div class="volume-fill" id="volumeFill"></div>
+                <div class="volume-handle" id="volumeHandle"></div>
+              </div>
+              <span class="volume-percent" id="volumePercent">70%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Page -->
+      <div id="statsPage" class="page">
+        <div class="glass-card stats-page">
+          <header class="stats-header">
+            <h1>Statistics</h1>
+            <p class="stats-subtitle">Your productivity insights</p>
+          </header>
+
+          <div class="streak-card">
+            <div class="streak-value" id="completionStreak">0</div>
+            <div class="streak-label">Day Streak</div>
+            <p class="streak-desc">
+              Consecutive days with at least one completed task
+            </p>
+          </div>
+
+          <div class="overview-cards">
+            <div class="overview-card">
+              <div class="overview-icon">🎯</div>
+              <div class="overview-value" id="weeklyCompletedTasks">0</div>
+              <div class="overview-label">Tasks completed this week</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-icon">⏰</div>
+              <div class="overview-value" id="weeklyFocusMinutes">0</div>
+              <div class="overview-label">Focus time this week (min)</div>
+            </div>
+          </div>
+
+          <section class="stats-section weekly-chart-section">
+            <h2 class="stats-section-title">Tasks Completed This Week</h2>
+            <div id="weeklyChart" class="weekly-chart"></div>
+          </section>
+
+          <section class="stats-section period-distribution-section">
+            <h2 class="stats-section-title">Completion by Time of Day</h2>
+            <div id="periodDistribution" class="period-distribution"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="taskModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="taskModalTitle">Add New Task</h2>
+          <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <form id="taskForm">
+          <div class="form-group">
+            <label for="taskText">Task Description</label>
+            <input
+              type="text"
+              id="taskText"
+              name="text"
+              placeholder="Enter task description"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="taskDate">Date</label>
+            <input type="date" id="taskDate" name="date" />
+          </div>
+          <div class="form-group">
+            <label>Duration</label>
+            <div class="duration-selector">
+              <button
+                type="button"
+                class="duration-btn duration-minus"
+                id="durationMinus"
+                aria-label="Decrease duration"
+              >
+                −
+              </button>
+              <span class="duration-display" id="durationDisplay">25 min</span>
+              <button
+                type="button"
+                class="duration-btn duration-plus"
+                id="durationPlus"
+                aria-label="Increase duration"
+              >
+                +
+              </button>
+            </div>
+            <input type="hidden" name="duration" id="taskDuration" value="25" />
+          </div>
+          <div class="form-group">
+            <label>Time of Day</label>
+            <div class="period-radio-group">
+              <label class="period-radio-option">
+                <input type="radio" name="period" value="anytime" checked />
+                <span>Anytime</span>
+              </label>
+              <label class="period-radio-option">
+                <input type="radio" name="period" value="morning" />
+                <span>Morning</span>
+              </label>
+              <label class="period-radio-option">
+                <input type="radio" name="period" value="afternoon" />
+                <span>Afternoon</span>
+              </label>
+              <label class="period-radio-option">
+                <input type="radio" name="period" value="evening" />
+                <span>Evening</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancelBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary" id="taskSubmitBtn">
+              Add Task
             </button>
           </div>
-        </div>
-
-        <!-- Music view -->
-        <div id="focusMusicView" style="display: none">
-          <!-- Hidden audio element for white noise playback -->
-          <audio id="whiteNoiseAudio">
-            <source src="/white_noise/39-Rain-60min.mp3" type="audio/mpeg" />
-          </audio>
-
-          <h2 style="text-align: center; margin-bottom: 8px">Focus Music</h2>
-          <p class="sub-header" style="text-align: center; margin-bottom: 24px">
-            Play music to help you concentrate
-          </p>
-
-          <div class="player-wrapper" id="playerWrapper">
-            <div class="tonearm"></div>
-            <div class="vinyl-record">
-              <div class="album-art"></div>
-            </div>
-          </div>
-
-          <div class="pagination-dots">
-            <span class="dot"></span>
-            <span class="dot active"></span>
-            <span class="dot"></span>
-          </div>
-
-          <div class="focus-countdown-section">
-            <div class="focus-countdown-display" id="focusCountdown">25:00</div>
-            <p class="focus-countdown-label" id="focusCountdownLabel">remaining</p>
-          </div>
-
-          <div class="playback-controls">
-            <button class="play-btn" id="masterPlayBtn" aria-label="Start / Pause">▶</button>
-          </div>
-
-          <div class="volume-control">
-            <span class="nav-icon">🔊</span>
-            <div class="volume-slider-wrapper" id="volumeSlider">
-              <div class="volume-fill" id="volumeFill"></div>
-              <div class="volume-handle" id="volumeHandle"></div>
-            </div>
-            <span class="volume-percent" id="volumePercent">70%</span>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
-    <!-- Stats Page -->
-    <div id="statsPage" class="page">
-      <div class="glass-card stats-page">
-        <header class="stats-header">
-          <h1>Statistics</h1>
-          <p class="stats-subtitle">Your productivity insights</p>
-        </header>
-
-        <div class="streak-card">
-          <div class="streak-value" id="completionStreak">0</div>
-          <div class="streak-label">Day Streak</div>
-          <p class="streak-desc">Consecutive days with at least one completed task</p>
+    <!-- Delete Task Modal -->
+    <div id="deleteModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Delete Task</h2>
+          <button class="modal-close" id="closeDeleteModal">&times;</button>
         </div>
-
-        <div class="overview-cards">
-          <div class="overview-card">
-            <div class="overview-icon">🎯</div>
-            <div class="overview-value" id="weeklyCompletedTasks">0</div>
-            <div class="overview-label">Tasks completed this week</div>
-          </div>
-          <div class="overview-card">
-            <div class="overview-icon">⏰</div>
-            <div class="overview-value" id="weeklyFocusMinutes">0</div>
-            <div class="overview-label">Focus time this week (min)</div>
-          </div>
-        </div>
-
-        <section class="stats-section weekly-chart-section">
-          <h2 class="stats-section-title">Tasks Completed This Week</h2>
-          <div id="weeklyChart" class="weekly-chart"></div>
-        </section>
-
-        <section class="stats-section period-distribution-section">
-          <h2 class="stats-section-title">Completion by Time of Day</h2>
-          <div id="periodDistribution" class="period-distribution"></div>
-        </section>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Task Modal -->
-  <div id="taskModal" class="modal" style="display: none">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="taskModalTitle">Add New Task</h2>
-        <button class="modal-close" id="closeModal">&times;</button>
-      </div>
-      <form id="taskForm">
-        <div class="form-group">
-          <label for="taskText">Task Description</label>
-          <input type="text" id="taskText" name="text" placeholder="Enter task description" required />
-        </div>
-        <div class="form-group">
-          <label for="taskDate">Date</label>
-          <input type="date" id="taskDate" name="date" />
-        </div>
-        <div class="form-group">
-          <label>Duration</label>
-          <div class="duration-selector">
-            <button type="button" class="duration-btn duration-minus" id="durationMinus"
-              aria-label="Decrease duration">−</button>
-            <span class="duration-display" id="durationDisplay">25 min</span>
-            <button type="button" class="duration-btn duration-plus" id="durationPlus"
-              aria-label="Increase duration">+</button>
-          </div>
-          <input type="hidden" name="duration" id="taskDuration" value="25" />
-        </div>
-        <div class="form-group">
-          <label>Time of Day</label>
-          <div class="period-radio-group">
-            <label class="period-radio-option">
-              <input type="radio" name="period" value="anytime" checked />
-              <span>Anytime</span>
-            </label>
-            <label class="period-radio-option">
-              <input type="radio" name="period" value="morning" />
-              <span>Morning</span>
-            </label>
-            <label class="period-radio-option">
-              <input type="radio" name="period" value="afternoon" />
-              <span>Afternoon</span>
-            </label>
-            <label class="period-radio-option">
-              <input type="radio" name="period" value="evening" />
-              <span>Evening</span>
-            </label>
-          </div>
-        </div>
+        <p class="delete-modal-message" id="deleteModalMessage"></p>
         <div class="form-actions">
-          <button type="button" class="btn-secondary" id="cancelBtn">
+          <button type="button" class="btn-secondary" id="cancelDeleteBtn">
             Cancel
           </button>
-          <button type="submit" class="btn-primary" id="taskSubmitBtn">Add Task</button>
+          <button type="button" class="btn-danger" id="confirmDeleteBtn">
+            Delete
+          </button>
         </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Delete Task Modal -->
-  <div id="deleteModal" class="modal" style="display: none">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Delete Task</h2>
-        <button class="modal-close" id="closeDeleteModal">&times;</button>
-      </div>
-      <p class="delete-modal-message" id="deleteModalMessage"></p>
-      <div class="form-actions">
-        <button type="button" class="btn-secondary" id="cancelDeleteBtn">
-          Cancel
-        </button>
-        <button type="button" class="btn-danger" id="confirmDeleteBtn">
-          Delete
-        </button>
       </div>
     </div>
-  </div>
 
-  <script type="module" src="/js/main.js"></script>
-</body>
-
+    <script type="module" src="/js/main.js"></script>
+  </body>
 </html>

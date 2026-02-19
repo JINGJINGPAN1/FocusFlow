@@ -1,8 +1,10 @@
 const API_BASE_URL = '/api';
 
-export async function fetchTasks(date) {
-  const url = date ? `${API_BASE_URL}/tasks?date=${encodeURIComponent(date)}` : `${API_BASE_URL}/tasks`;
-  const response = await fetch(url);
+export async function fetchTasks(date, options = {}) {
+  const url = date
+    ? `${API_BASE_URL}/tasks?date=${encodeURIComponent(date)}`
+    : `${API_BASE_URL}/tasks`;
+  const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error('Failed to fetch tasks');
   }
@@ -50,8 +52,8 @@ export async function deleteTask(taskId) {
   return response.json();
 }
 
-export async function fetchSessions() {
-  const response = await fetch(`${API_BASE_URL}/sessions`);
+export async function fetchSessions(options = {}) {
+  const response = await fetch(`${API_BASE_URL}/sessions`, options);
   if (!response.ok) {
     throw new Error('Failed to fetch sessions');
   }

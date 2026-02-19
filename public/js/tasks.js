@@ -6,17 +6,25 @@ let tasks = [];
 let currentFilter = 'all';
 let editingTaskId = null;
 let deletingTaskId = null;
-let selectedDate = new Date().toISOString().slice(0, 10);
+function toLocalDateString(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+let selectedDate = toLocalDateString(new Date());
 
 export function initTasks() {
   initDatePicker();
   updateDateHeader();
   loadTasks();
   setupEventListeners();
+  attachTaskEventListeners();
 }
 
 function getTodayDateString() {
-  return new Date().toISOString().slice(0, 10);
+  return toLocalDateString(new Date());
 }
 
 function initDatePicker() {
@@ -53,7 +61,9 @@ function setupEventListeners() {
     document.getElementById('taskForm').reset();
     const dateInput = document.getElementById('taskDate');
     if (dateInput) dateInput.value = selectedDate;
-    const radio = document.querySelector(`input[name="period"][value="${preselectedPeriod}"]`);
+    const radio = document.querySelector(
+      `input[name="period"][value="${preselectedPeriod}"]`
+    );
     if (radio) radio.checked = true;
     resetDurationSelector();
     document.getElementById('taskModal').style.display = 'flex';
@@ -65,7 +75,9 @@ function setupEventListeners() {
     document.getElementById('taskText').value = task.text;
     const dateInput = document.getElementById('taskDate');
     if (dateInput) dateInput.value = task.date || getTodayDateString();
-    const radio = document.querySelector(`input[name="period"][value="${task.period || 'anytime'}"]`);
+    const radio = document.querySelector(
+      `input[name="period"][value="${task.period || 'anytime'}"]`
+    );
     if (radio) radio.checked = true;
     const duration = task.duration || DURATION_DEFAULT;
     const hiddenInput = document.getElementById('taskDuration');
@@ -133,8 +145,10 @@ function setupEventListeners() {
     const formData = new FormData(e.target);
     const text = formData.get('text');
     const period = formData.get('period') || 'anytime';
-    const duration = parseInt(document.getElementById('taskDuration').value, 10) || 25;
-    const date = document.getElementById('taskDate').value || getTodayDateString();
+    const duration =
+      parseInt(document.getElementById('taskDuration').value, 10) || 25;
+    const date =
+      document.getElementById('taskDate').value || getTodayDateString();
 
     try {
       if (editingTaskId) {
@@ -398,7 +412,7 @@ function updateProgressRing() {
   if (fillEl) {
     const radius = 52;
     const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (circumference * (completed / total));
+    const offset = circumference - circumference * (completed / total);
     fillEl.style.strokeDashoffset = total > 0 ? offset : circumference;
   }
 }

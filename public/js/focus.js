@@ -10,6 +10,8 @@ let volume = 70;
 let whiteNoiseAudio = null;
 
 const FOCUS_DURATION_DEFAULT = 25;
+// Test: set to 5 for 5-second focus, set to 0 to use normal duration
+const TEST_DURATION_SECONDS = 0;
 
 export function initFocus() {
   setupEventListeners();
@@ -48,19 +50,27 @@ function setupFocusStartControls() {
     const customVal = customInput?.value?.trim();
     if (customVal) {
       const parsed = parseInt(customVal, 10);
-      if (!isNaN(parsed) && parsed >= FOCUS_DURATION_MIN && parsed <= FOCUS_DURATION_MAX) {
+      if (
+        !isNaN(parsed) &&
+        parsed >= FOCUS_DURATION_MIN &&
+        parsed <= FOCUS_DURATION_MAX
+      ) {
         minutes = parsed;
       }
     } else {
       const activeBtn = document.querySelector('.focus-duration-btn.active');
-      minutes = activeBtn ? parseInt(activeBtn.dataset.minutes, 10) : FOCUS_DURATION_DEFAULT;
+      minutes = activeBtn
+        ? parseInt(activeBtn.dataset.minutes, 10)
+        : FOCUS_DURATION_DEFAULT;
     }
     startFocusSession(null, 'Focus Session', minutes);
   });
 
-  document.getElementById('focusStartAgainBtn')?.addEventListener('click', () => {
-    resetSession();
-  });
+  document
+    .getElementById('focusStartAgainBtn')
+    ?.addEventListener('click', () => {
+      resetSession();
+    });
 }
 
 function initWhiteNoise() {
@@ -68,10 +78,10 @@ function initWhiteNoise() {
   if (whiteNoiseAudio) {
     // Set initial volume
     whiteNoiseAudio.volume = volume / 100;
-    
+
     // Listen for audio end event for loop playback
     whiteNoiseAudio.addEventListener('ended', handleAudioEnded);
-    
+
     // Listen for audio errors
     whiteNoiseAudio.addEventListener('error', (e) => {
       console.error('White noise audio error:', e);
@@ -112,7 +122,8 @@ export function startFocusSession(taskId, _taskName, durationMinutes) {
 
   // Use task duration if set, otherwise default to 25 minutes
   const minutes = durationMinutes && durationMinutes > 0 ? durationMinutes : 25;
-  totalDuration = minutes * 60;
+  totalDuration =
+    TEST_DURATION_SECONDS > 0 ? TEST_DURATION_SECONDS : minutes * 60;
   remainingSeconds = totalDuration;
   updateProgress();
 
@@ -225,6 +236,11 @@ async function completeSession() {
         completed: true,
         duration: actualDurationSeconds,
       });
+      if (currentTaskId) {
+        await api.updateTask(currentTaskId, {
+          completed: true,
+        });
+      }
       showCompleteView(actualDurationSeconds);
       if (window.updateStats) {
         window.updateStats();
@@ -239,6 +255,11 @@ async function completeSession() {
         duration: actualDurationSeconds,
         completed: true,
       });
+      if (currentTaskId) {
+        await api.updateTask(currentTaskId, {
+          completed: true,
+        });
+      }
       showCompleteView(actualDurationSeconds);
       if (window.updateStats) {
         window.updateStats();
@@ -264,16 +285,14 @@ function showCompleteView(completedSeconds) {
 
   const mins = Math.floor(completedSeconds / 60);
   const secs = completedSeconds % 60;
-  const timeDisplay = secs > 0
-    ? `${mins} min ${secs} sec`
-    : mins === 1
-      ? '1 min'
-      : `${mins} min`;
-  const subtitleText = mins === 1 && secs === 0
-    ? 'You focused for 1 minute'
-    : secs > 0
-      ? `You focused for ${mins} minutes ${secs} seconds`
-      : `You focused for ${mins} minutes`;
+  const timeDisplay =
+    secs > 0 ? `${mins} min ${secs} sec` : mins === 1 ? '1 min' : `${mins} min`;
+  const subtitleText =
+    mins === 1 && secs === 0
+      ? 'You focused for 1 minute'
+      : secs > 0
+        ? `You focused for ${mins} minutes ${secs} seconds`
+        : `You focused for ${mins} minutes`;
 
   document.getElementById('noSessionView').style.display = 'none';
   document.getElementById('focusMusicView').style.display = 'none';
@@ -332,7 +351,10 @@ function updateProgress() {
 function setVolume(event) {
   const bar = event.currentTarget;
   const rect = bar.getBoundingClientRect();
-  volume = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
+  volume = Math.max(
+    0,
+    Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)
+  );
   const volumeFill = document.getElementById('volumeFill');
   const volumeHandle = document.getElementById('volumeHandle');
   const volumePercent = document.getElementById('volumePercent');

@@ -4,7 +4,11 @@ import { getCollection } from '../db/database.js';
 const router = express.Router();
 
 function getTodayDateString() {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 // GET all tasks (optional ?date=YYYY-MM-DD to filter by date)
@@ -54,7 +58,13 @@ const VALID_PERIODS = ['anytime', 'morning', 'afternoon', 'evening'];
 // POST create a new task
 router.post('/', async (req, res) => {
   try {
-    const { text, completed = false, period = 'anytime', duration, date } = req.body;
+    const {
+      text,
+      completed = false,
+      period = 'anytime',
+      duration,
+      date,
+    } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim() === '') {
       return res.status(400).json({ error: 'Task text is required' });
@@ -69,7 +79,8 @@ router.post('/', async (req, res) => {
       !isNaN(parsedDuration) && parsedDuration > 0
         ? Math.max(5, Math.min(180, parsedDuration))
         : 25;
-    const taskDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : getTodayDateString();
+    const taskDate =
+      date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : getTodayDateString();
 
     const tasksCollection = getCollection('tasks');
     const newTask = {
@@ -109,13 +120,18 @@ router.put('/:id', async (req, res) => {
         : 'anytime';
     }
 
-    if (req.body.date !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(req.body.date)) {
+    if (
+      req.body.date !== undefined &&
+      /^\d{4}-\d{2}-\d{2}$/.test(req.body.date)
+    ) {
       updateData.date = req.body.date;
     }
 
     if (text !== undefined) {
       if (typeof text !== 'string' || text.trim() === '') {
-        return res.status(400).json({ error: 'Task text must be a non-empty string' });
+        return res
+          .status(400)
+          .json({ error: 'Task text must be a non-empty string' });
       }
       updateData.text = text.trim();
     }

@@ -19,6 +19,9 @@ function initNavigation() {
       if (targetPage === 'stats') {
         window.updateStats?.();
       }
+      if (targetPage === 'tasks') {
+        window.loadTasks?.();
+      }
     });
   });
 }
