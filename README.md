@@ -48,7 +48,7 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 | Statistics | Add Task Modal | Session Complete |
 |:----------:|:--------------:|:----------------:|
 | ![Statistics](screenshots/3.png) | ![Add Task](screenshots/5.png) |![Session Complete](screenshots/6.png) |
-| _Day streak, weekly metrics, and charts_ | _Task creation form with date, duration, and time of day_ |_Focus Sesson complete with duration, and start again button|
+| _Day streak, weekly metrics, and charts_ | _Task creation form with date, duration, and time of day_ |_Focus Sesson complete with duration, and start again button_ |
 
 ## Instructions to Build
 
