@@ -33,10 +33,7 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 
 - **[Design Document](docs/design-document.md)** – Project description, user personas, user stories, and design mockups
 - **[MongoDB Local Setup](docs/mongodb-local-setup.md)** – Guide for setting up MongoDB locally
-
-## Video Introduction
-
-> **Note:** Click the image above to watch the video on YouTube.
+- **[Deployment Guide](docs/deployment.md)** – Deploy to public server (Render + MongoDB Atlas)
 
 ## Screenshots
 
@@ -47,8 +44,8 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 
 | Statistics | Add Task Modal | Session Complete |
 |:----------:|:--------------:|:----------------:|
-| ![Statistics](screenshots/3.png) | ![Add Task](screenshots/5.png) |![Session Complete](screenshots/6.png) |
-| _Day streak, weekly metrics, and charts_ | _Task creation form with date, duration, and time of day_ |_Focus Sesson complete with duration, and start again button_ |
+| ![Statistics](screenshots/3.png) | ![Add Task](screenshots/5.png) | ![Session Complete](screenshots/6.png) |
+| _Day streak, weekly metrics, and charts_ | _Task creation form with date, duration, and time of day_ | _Focus session complete with duration and Start Another Session button_ |
 
 ## Instructions to Build
 
@@ -82,7 +79,7 @@ PORT=3000
 **MongoDB Atlas:**
 
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/focusflow?retryWrites=true&w=majority
 DB_NAME=focusflow
 PORT=3000
 ```
@@ -121,6 +118,10 @@ Open your browser and go to:
 ```
 http://localhost:3000
 ```
+
+### Deploy to Production
+
+To deploy FocusFlow to a public server, see **[Deployment Guide](docs/deployment.md)**.
 
 ## How to Use
 
@@ -180,6 +181,7 @@ FocusFlow/
 ├── public/
 │   ├── index.html                   # Main HTML page (SPA shell)
 │   ├── favicon.png                  # App icon
+│   ├── white_noise/                 # Audio files for focus sessions
 │   ├── css/
 │   │   ├── modules/                 # CSS modules
 │   │   │   ├── variables.css        # Design tokens (colors, spacing)
@@ -196,7 +198,13 @@ FocusFlow/
 │       ├── focus.js                 # Focus session module (timer, white noise)
 │       ├── stats.js                 # Statistics module (charts)
 │       └── main.js                  # App entry, tab navigation
-├── screenshots/                     # App screenshots for README
+├── screenshots/                      # App screenshots for README
+│   ├── 1.png                        # Tasks page
+│   ├── 2.png                        # Focus session setup
+│   ├── 3.png                        # Statistics page
+│   ├── 4.png                        # Focus music (active session)
+│   ├── 5.png                        # Add task modal
+│   └── 6.png                        # Session complete
 ├── scripts/
 │   └── seed.js                      # Database seed (1000+ records)
 ├── docs/
@@ -215,7 +223,7 @@ FocusFlow/
 
 ### Tasks
 
-- `GET /api/tasks` - Get all tasks
+- `GET /api/tasks` - Get all tasks (optional `?date=YYYY-MM-DD` to filter by date)
 - `GET /api/tasks/:id` - Get a single task
 - `POST /api/tasks` - Create a new task
 - `PUT /api/tasks/:id` - Update a task
@@ -236,6 +244,9 @@ FocusFlow/
    - `_id`: ObjectId
    - `text`: String (task description)
    - `completed`: Boolean
+   - `period`: String (anytime, morning, afternoon, evening)
+   - `duration`: Number (minutes)
+   - `date`: String (YYYY-MM-DD)
    - `createdAt`: Date
    - `updatedAt`: Date
 
@@ -254,13 +265,15 @@ FocusFlow/
 ✅ ES Modules (no CommonJS/require)  
 ✅ Client-side rendering with vanilla JavaScript  
 ✅ At least 2 MongoDB collections with full CRUD operations  
-✅ Form implementation (task creation form, session form)  
+✅ Form implementation (task creation form)  
 ✅ CSS organized by modules  
 ✅ ESLint configuration  
 ✅ Prettier configuration  
 ✅ MIT License  
 ✅ Proper code organization  
-✅ No exposed credentials (uses environment variables)
+✅ No exposed credentials (uses environment variables)  
+✅ Deployed on Render (public URL)  
+✅ Database seed script (1000+ records)
 
 ## License
 
