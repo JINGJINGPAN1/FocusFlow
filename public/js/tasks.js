@@ -41,9 +41,35 @@ function initDatePicker() {
 
 function updateDateHeader() {
   const d = new Date(selectedDate + 'T12:00:00');
+  const today = new Date();
+  const todayStr = toLocalDateString(today);
+
   const weekdayEl = document.getElementById('tasksWeekday');
   if (weekdayEl) {
     weekdayEl.textContent = d.toLocaleDateString('en-US', { weekday: 'long' });
+  }
+
+  const pageTitleEl = document.getElementById('tasksPageTitle');
+  if (pageTitleEl) {
+    if (selectedDate === todayStr) {
+      pageTitleEl.textContent = 'Today';
+    } else {
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if (selectedDate === toLocalDateString(yesterday)) {
+        pageTitleEl.textContent = 'Yesterday';
+      } else if (selectedDate === toLocalDateString(tomorrow)) {
+        pageTitleEl.textContent = 'Tomorrow';
+      } else {
+        pageTitleEl.textContent = d.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+    }
   }
 }
 
