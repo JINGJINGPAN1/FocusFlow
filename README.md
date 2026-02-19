@@ -96,7 +96,15 @@ For development with auto-reload:
 npm run dev
 ```
 
-### Step 5: Access the App
+### Step 5: Seed Database (Optional)
+
+To populate the database with 1000+ sample records (tasks and focus sessions):
+
+```bash
+npm run seed
+```
+
+### Step 6: Access the App
 
 Open your browser and go to:
 
