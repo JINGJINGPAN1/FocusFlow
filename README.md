@@ -12,6 +12,10 @@ Email: kong.yin@northeastern.edu
 
 [CS5610 Web Development - Northeastern University](https://johnguerra.co/classes/webDevelopment_online_spring_2026/)
 
+## Live Demo
+
+> **Deployed URL**: `https://focusflow-wj9l.onrender.com/`
+
 ## Project Objective
 
 FocusFlow is a web-based productivity application that helps users manage tasks and maintain focus through structured, timed work sessions. It combines task management with a Pomodoro-style focus timer, enabling users to organize their work, stay concentrated, and track productivity over time.
@@ -111,6 +115,10 @@ Open your browser and go to:
 ```
 http://localhost:3000
 ```
+
+### Deploy to Production
+
+To deploy FocusFlow to a public server, see **[Deployment Guide](docs/deployment.md)**. The guide covers deployment to Render with MongoDB Atlas.
 
 ## How to Use
 
