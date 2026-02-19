@@ -38,11 +38,17 @@ The app emphasizes **execution over planning**: users create tasks, choose a foc
 
 > **Note:** Click the image above to watch the video on YouTube.
 
-## Screenshot
+## Screenshots
 
-![FocusFlow Application Screenshot](docs/screenshot.png)
+| Tasks Page | Focus Session | Focus Music |
+|:----------:|:-------------:|:-----------:|
+| ![Tasks](screenshots/1.png) | ![Focus Session](screenshots/2.png) | ![Focus Music](screenshots/4.png) |
+| _Task list with progress, filters, and date picker_ | _Duration selection (15/25/45/60 min or custom)_ | _Active session with timer and white noise_ |
 
-_Main interface with Tasks, Focus, and Stats tabs. Place your app screenshot at `docs/screenshot.png`._
+| Statistics | Add Task Modal | Session Complete |
+|:----------:|:--------------:|:----------------:|
+| ![Statistics](screenshots/3.png) | ![Add Task](screenshots/5.png) |![Session Complete](screenshots/6.png) |
+| _Day streak, weekly metrics, and charts_ | _Task creation form with date, duration, and time of day_ |_Focus Sesson complete with duration, and start again button|
 
 ## Instructions to Build
 
@@ -172,29 +178,36 @@ FocusFlow/
 │       │   └── sessions.js          # Focus sessions API routes (CRUD)
 │       └── index.js                 # Express server setup
 ├── public/
-│   ├── index.html                   # Main HTML page
+│   ├── index.html                   # Main HTML page (SPA shell)
+│   ├── favicon.png                  # App icon
 │   ├── css/
 │   │   ├── modules/                 # CSS modules
-│   │   │   ├── variables.css
-│   │   │   ├── base.css
-│   │   │   ├── navigation.css
-│   │   │   ├── tasks.css
-│   │   │   ├── focus.css
-│   │   │   ├── stats.css
-│   │   │   └── modal.css
-│   │   └── main.css                 # Main CSS import file
+│   │   │   ├── variables.css        # Design tokens (colors, spacing)
+│   │   │   ├── base.css             # Global styles, layout
+│   │   │   ├── navigation.css       # Sidebar, nav items
+│   │   │   ├── tasks.css            # Tasks page styles
+│   │   │   ├── focus.css            # Focus session styles
+│   │   │   ├── stats.css            # Statistics page styles
+│   │   │   └── modal.css            # Modal dialogs
+│   │   └── main.css                 # CSS entry (imports all modules)
 │   └── js/
-│       ├── api.js                   # API client module
-│       ├── tasks.js                 # Tasks management module
-│       ├── focus.js                 # Focus session module
-│       ├── stats.js                 # Statistics module
-│       └── main.js                  # Main application entry
+│       ├── api.js                   # API client (fetch wrappers)
+│       ├── tasks.js                 # Tasks module (CRUD, render)
+│       ├── focus.js                 # Focus session module (timer, white noise)
+│       ├── stats.js                 # Statistics module (charts)
+│       └── main.js                  # App entry, tab navigation
+├── screenshots/                     # App screenshots for README
+├── scripts/
+│   └── seed.js                      # Database seed (1000+ records)
 ├── docs/
-│   └── design-document.md           # Design document
+│   ├── design-document.md           # Design document
+│   └── mongodb-local-setup.md       # MongoDB setup guide
 ├── package.json
-├── .eslintrc.json                   # ESLint configuration
-├── .prettierrc                      # Prettier configuration
-├── LICENSE                          # MIT License
+├── render.yaml                      # Render deployment config
+├── .eslintrc.json
+├── .prettierrc
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
