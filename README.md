@@ -116,10 +116,6 @@ Open your browser and go to:
 http://localhost:3000
 ```
 
-### Deploy to Production
-
-To deploy FocusFlow to a public server, see **[Deployment Guide](docs/deployment.md)**. The guide covers deployment to Render with MongoDB Atlas.
-
 ## How to Use
 
 ### Tasks Page
