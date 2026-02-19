@@ -106,7 +106,7 @@ function setupEventListeners() {
   const volumeSlider = document.getElementById('volumeSlider');
 
   playBtn?.addEventListener('click', togglePlay);
-  volumeSlider?.addEventListener('click', setVolume);
+  volumeSlider?.addEventListener('input', setVolume);
 }
 
 export function startFocusSession(taskId, _taskName, durationMinutes) {
@@ -362,21 +362,12 @@ function updateProgress() {
 }
 
 function setVolume(event) {
-  const bar = event.currentTarget;
-  const rect = bar.getBoundingClientRect();
-  volume = Math.max(
-    0,
-    Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)
-  );
-  const volumeFill = document.getElementById('volumeFill');
-  const volumeHandle = document.getElementById('volumeHandle');
+  const rangeInput = event.currentTarget;
+  volume = parseInt(rangeInput.value, 10);
   const volumePercent = document.getElementById('volumePercent');
 
-  if (volumeFill) volumeFill.style.width = volume + '%';
-  if (volumeHandle) volumeHandle.style.left = volume + '%';
-  if (volumePercent) volumePercent.textContent = Math.round(volume) + '%';
+  if (volumePercent) volumePercent.textContent = volume + '%';
 
-  // Sync white noise volume
   if (whiteNoiseAudio) {
     whiteNoiseAudio.volume = volume / 100;
   }

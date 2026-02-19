@@ -398,32 +398,34 @@
   gap: 12px;
 }
 
-.volume-slider-wrapper {
+.volume-range {
   flex: 1;
   height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
   background: var(--accent-soft);
   border-radius: 2px;
-  position: relative;
   cursor: pointer;
 }
 
-.volume-fill {
-  height: 100%;
-  background: var(--text-main);
-  border-radius: 2px;
-  width: 70%;
-}
-
-.volume-handle {
+.volume-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: white;
   border: 2px solid var(--text-main);
-  position: absolute;
-  top: 50%;
-  left: 70%;
-  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.volume-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--text-main);
+  cursor: pointer;
 }
 
 .volume-percent {

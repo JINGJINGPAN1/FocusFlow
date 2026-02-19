@@ -203,10 +203,15 @@
             </div>
             <div class="volume-control">
               <span class="nav-icon">🔊</span>
-              <div class="volume-slider-wrapper" id="volumeSlider">
-                <div class="volume-fill" id="volumeFill"></div>
-                <div class="volume-handle" id="volumeHandle"></div>
-              </div>
+              <input
+                type="range"
+                id="volumeSlider"
+                class="volume-range"
+                min="0"
+                max="100"
+                value="70"
+                aria-label="Volume"
+              />
               <span class="volume-percent" id="volumePercent">70%</span>
             </div>
           </div>
