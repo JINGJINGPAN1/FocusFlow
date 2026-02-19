@@ -179,3 +179,30 @@
   min-width: 36px;
   text-align: right;
 }
+
+@media (max-width: 600px) {
+  .overview-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-value {
+    font-size: 36px;
+  }
+
+  .streak-card {
+    padding: 20px 16px;
+  }
+
+  .stats-section {
+    padding: 16px;
+  }
+
+  .chart-bar-container {
+    max-width: 28px;
+  }
+
+  .period-bar-label {
+    min-width: 64px;
+    font-size: 13px;
+  }
+}

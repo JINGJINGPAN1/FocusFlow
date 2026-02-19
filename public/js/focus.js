@@ -132,7 +132,7 @@ export function startFocusSession(taskId, _taskName, durationMinutes) {
   if (playBtn) playBtn.textContent = '▶';
   if (playerWrapper) playerWrapper.classList.remove('is-playing');
 
-  const navTabs = document.querySelectorAll('.nav-tab');
+  const navTabs = document.querySelectorAll('.sidebar-nav-item');
   const pages = document.querySelectorAll('.page');
   navTabs.forEach((tab) => tab.classList.remove('active'));
   pages.forEach((page) => page.classList.remove('active'));

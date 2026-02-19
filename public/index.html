@@ -4,30 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FocusFlow - Task & Focus Management</title>
+    <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="/css/main.css" />
   </head>
 
   <body>
-    <div class="container">
-      <!-- Top Navigation -->
-      <nav class="top-nav">
-        <button class="nav-tab active" data-page="tasks">
-          <span class="nav-icon">📋</span>
-          <span>Tasks</span>
+    <div class="app-layout">
+      <!-- Left Sidebar (Notion-style) -->
+      <aside class="sidebar">
+        <div class="sidebar-header" style="display: flex; align-items: center; gap: 8px;">
+          <img src="/favicon.png" alt="FocusFlow" style="width: 40px; height: 40px;" />
+          <h1 class="sidebar-logo" style="color: var(--primary-purple);">FocusFlow</h1>
+        </div>
+        <button class="sidebar-add-btn" id="addTaskBtn">
+          <span class="sidebar-add-icon">+</span>
+          <span>Add task</span>
         </button>
-        <button class="nav-tab" data-page="focus">
-          <span class="nav-icon">⏱</span>
-          <span>Focus</span>
-        </button>
-        <button class="nav-tab" data-page="stats">
-          <span class="nav-icon">📊</span>
-          <span>Stats</span>
-        </button>
-      </nav>
+        <nav class="sidebar-nav">
+          <button class="sidebar-nav-item active" data-page="tasks">
+            <span>Today</span>
+          </button>
+          <button class="sidebar-nav-item" data-page="focus">
+            <span>Focus</span>
+          </button>
+          <button class="sidebar-nav-item" data-page="stats">
+            <span>Statistics</span>
+          </button>
+        </nav>
+      </aside>
 
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
+          <span class="sidebar-toggle-icon"></span>
+        </button>
+        <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
       <!-- Tasks Page -->
       <div id="tasksPage" class="page active">
-        <div class="glass-card">
+        <div class="page-inner">
           <header class="tasks-date-header">
             <div class="tasks-date-left">
               <h2 class="tasks-weekday" id="tasksWeekday">Tuesday</h2>
@@ -65,13 +79,7 @@
           </header>
 
           <div class="page-header">
-            <div>
-              <h1>Tasks</h1>
-            </div>
-            <button class="add-task-btn" id="addTaskBtn">
-              <span>+</span>
-              <span>Add Task</span>
-            </button>
+            <h1 class="page-title">Today</h1>
           </div>
 
           <div class="filter-nav">
@@ -157,7 +165,7 @@
                   +
                 </button>
               </div>
-              <ul class="todo-list" data-period="evening"></ul>
+              <ul class="todo-list" data-period="evening">          </ul>
             </section>
           </div>
         </div>
@@ -165,7 +173,7 @@
 
       <!-- Focus Page -->
       <div id="focusPage" class="page">
-        <div class="glass-card">
+        <div class="page-inner">
           <div id="noSessionView">
             <div class="no-session-card">
               <h2 class="no-session-title">Focus Session</h2>
@@ -313,7 +321,7 @@
 
       <!-- Stats Page -->
       <div id="statsPage" class="page">
-        <div class="glass-card stats-page">
+        <div class="page-inner stats-page">
           <header class="stats-header">
             <h1>Statistics</h1>
             <p class="stats-subtitle">Your productivity insights</p>
@@ -351,6 +359,7 @@
           </section>
         </div>
       </div>
+      </main>
     </div>
 
     <!-- Add Task Modal -->

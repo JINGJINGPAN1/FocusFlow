@@ -1,11 +1,15 @@
 :root {
-  --bg-color: #f8f9fd;
+  --bg-color: #faf9fc;
   --card-bg: #ffffff;
   --primary-purple: #7262b8;
+  --primary-purple-soft: #e8e4f2;
+  --sidebar-bg: #f0edf5;
+  --sidebar-text: #4a4458;
+  --sidebar-text-hover: #2d2a33;
   --text-main: #333333;
-  --text-sub: #8e8e93;
+  --text-sub: #6b6578;
   --accent-soft: #ebe9f5;
-  --nav-active-bg: #f5f5f7;
+  --nav-active-bg: #e8e4f2;
   --nav-border: #e5e5ea;
   --error-color: #ff3b30;
   --success-color: #34c759;
