@@ -23,7 +23,7 @@ const FOCUS_DURATION_MIN = 1;
 const FOCUS_DURATION_MAX = 120;
 
 function setupFocusStartControls() {
-  const durationBtns = document.querySelectorAll('.focus-duration-btn');
+  const durationBtns = document.querySelectorAll('.focus-segment');
   const customInput = document.getElementById('focusCustomDuration');
   const startBtn = document.getElementById('focusStartBtn');
 
@@ -58,7 +58,7 @@ function setupFocusStartControls() {
         minutes = parsed;
       }
     } else {
-      const activeBtn = document.querySelector('.focus-duration-btn.active');
+      const activeBtn = document.querySelector('.focus-segment.active');
       minutes = activeBtn
         ? parseInt(activeBtn.dataset.minutes, 10)
         : FOCUS_DURATION_DEFAULT;

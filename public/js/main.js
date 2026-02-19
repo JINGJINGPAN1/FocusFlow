@@ -35,7 +35,6 @@ function initNavigation() {
       if (targetPage === 'tasks') {
         window.loadTasks?.();
       }
-
       closeSidebar();
     });
   });

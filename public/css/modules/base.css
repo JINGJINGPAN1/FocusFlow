@@ -9,13 +9,38 @@ html {
 }
 
 body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
-  background-color: var(--bg-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient);
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Decorative blurred blobs */
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-blob-1 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
+  top: -100px;
+  right: -100px;
+}
+
+.bg-blob-2 {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+  bottom: -80px;
+  left: -80px;
 }
 
 /* Notion-like app layout: sidebar + main */
@@ -24,6 +49,8 @@ body {
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .page {
@@ -40,7 +67,9 @@ body {
   flex: 1;
   min-width: 0;
   max-width: 100%;
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   min-height: 100vh;
 }
 
@@ -64,7 +93,8 @@ h1 {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 8px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .sub-header {
