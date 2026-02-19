@@ -319,6 +319,7 @@ export async function deleteSession() {
 
 function resetSession() {
   currentSession = null;
+  totalDuration = FOCUS_DURATION_DEFAULT * 60;
   remainingSeconds = totalDuration;
   isPlaying = false;
   currentTaskId = null;
@@ -331,11 +332,23 @@ function resetSession() {
   if (playBtn) playBtn.textContent = '▶';
   if (playerWrapper) playerWrapper.classList.remove('is-playing');
 
-  document.getElementById('noSessionView').style.display = 'block';
-  document.getElementById('focusMusicView').style.display = 'none';
+  // Hide complete and music views first, then show duration selector
   const completeView = document.getElementById('focusCompleteView');
-  completeView.style.display = 'none';
+  const noSessionView = document.getElementById('noSessionView');
+  const musicView = document.getElementById('focusMusicView');
   completeView.classList.remove('focus-complete-visible');
+  completeView.style.display = 'none';
+  if (musicView) musicView.style.display = 'none';
+  if (noSessionView) noSessionView.style.display = 'block';
+
+  // Reset duration selector to default (25 min)
+  const durationBtns = document.querySelectorAll('.focus-segment');
+  const customInput = document.getElementById('focusCustomDuration');
+  durationBtns.forEach((b) => b.classList.remove('active'));
+  const defaultBtn = document.querySelector('.focus-segment[data-minutes="25"]');
+  if (defaultBtn) defaultBtn.classList.add('active');
+  if (customInput) customInput.value = '';
+
   updateProgress();
 }
 
