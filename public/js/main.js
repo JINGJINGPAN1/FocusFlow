@@ -3,8 +3,21 @@ import { initFocus } from './focus.js';
 import { initStats } from './stats.js';
 
 function initNavigation() {
-  const navTabs = document.querySelectorAll('.nav-tab');
+  const appLayout = document.querySelector('.app-layout');
+  const navTabs = document.querySelectorAll('.sidebar-nav-item');
   const pages = document.querySelectorAll('.page');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function closeSidebar() {
+    appLayout?.classList.remove('sidebar-open');
+  }
+
+  sidebarToggle?.addEventListener('click', () => {
+    appLayout?.classList.toggle('sidebar-open');
+  });
+
+  sidebarBackdrop?.addEventListener('click', closeSidebar);
 
   navTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -22,6 +35,8 @@ function initNavigation() {
       if (targetPage === 'tasks') {
         window.loadTasks?.();
       }
+
+      closeSidebar();
     });
   });
 }
