@@ -1,5 +1,5 @@
 import { initTasks } from './tasks.js';
-import { initFocus } from './focus.js';
+import { initFocus, onLeaveFocusPage } from './focus.js';
 import { initStats } from './stats.js';
 
 function initNavigation() {
@@ -22,6 +22,7 @@ function initNavigation() {
   navTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const targetPage = tab.dataset.page;
+      const wasOnFocus = document.getElementById('focusPage')?.classList.contains('active');
 
       navTabs.forEach((t) => t.classList.remove('active'));
       pages.forEach((p) => p.classList.remove('active'));
@@ -29,6 +30,9 @@ function initNavigation() {
       tab.classList.add('active');
       document.getElementById(`${targetPage}Page`).classList.add('active');
 
+      if (wasOnFocus && targetPage !== 'focus') {
+        onLeaveFocusPage?.();
+      }
       if (targetPage === 'stats') {
         window.updateStats?.();
       }

@@ -370,3 +370,13 @@ function setVolume(event) {
 }
 
 window.startFocusSession = startFocusSession;
+
+/** When leaving Focus tab: if session is paused, reset to duration selection so user sees it when returning */
+export function onLeaveFocusPage() {
+  const musicView = document.getElementById('focusMusicView');
+  const noSessionView = document.getElementById('noSessionView');
+  if (!musicView || !noSessionView) return;
+  if (musicView.style.display !== 'none' && !isPlaying) {
+    resetSession();
+  }
+}
