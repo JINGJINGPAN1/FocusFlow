@@ -111,36 +111,11 @@
   letter-spacing: -0.02em;
 }
 
-.sidebar-add-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 12px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--primary-purple);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.sidebar-add-btn:hover {
-  background: var(--primary-purple-soft);
-}
-
-.sidebar-add-icon {
-  font-size: 18px;
-  line-height: 1;
-}
-
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
 .sidebar-nav-item {
