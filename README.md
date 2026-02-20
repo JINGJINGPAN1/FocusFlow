@@ -15,6 +15,8 @@ Email: kong.yin@northeastern.edu
 ## Live Demo
 
 > **Deployed URL**: `https://focusflow-wj9l.onrender.com/`
+> **Video**: `https://youtu.be/bPARGZR_Rmo`
+> **Slides**: `https://docs.google.com/presentation/d/169rFNHRbr-YcOhKNMbjO1l5P7dhrfmGEFjYgDyFev2E/edit?slide=id.p1#slide=id.p1`
 
 ## Project Objective
 
