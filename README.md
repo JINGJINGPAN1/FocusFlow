@@ -12,30 +12,23 @@ Email: kong.yin@northeastern.edu
 
 [CS5610 Web Development - Northeastern University](https://johnguerra.co/classes/webDevelopment_online_spring_2026/)
 
-## Live Demo
-
-> **Deployed URL**: `https://focusflow-wj9l.onrender.com/`
-> **Video**: `https://youtu.be/bPARGZR_Rmo`
-> **Slides**: `https://docs.google.com/presentation/d/169rFNHRbr-YcOhKNMbjO1l5P7dhrfmGEFjYgDyFev2E/edit?slide=id.p1#slide=id.p1`
-
 ## Project Objective
 
 FocusFlow is a web-based productivity application that helps users manage tasks and maintain focus through structured, timed work sessions. It combines task management with a Pomodoro-style focus timer, enabling users to organize their work, stay concentrated, and track productivity over time.
 
 The app emphasizes **execution over planning**: users create tasks, choose a focus duration, and start working. Each completed session is recorded and contributes to productivity insights. FocusFlow is designed for students, remote workers, and anyone who wants a simple, distraction-free way to focus and understand how they spend their time.
 
-### Key Features
-
-- **Task Management**: Create, edit, delete, and complete tasks. Organize by date and time of day (Anytime, Morning, Afternoon, Evening).
-- **Focus Sessions**: Start timed focus sessions with preset durations (15, 25, 45, 60 min) or custom length. Optional white noise. Play/pause control.
-- **Session Completion**: Clear completion state with success feedback, duration display, and "Start Another Session" button.
-- **Statistics**: Day streak, weekly completed tasks, weekly focus minutes, bar chart by weekday, and completion by time of day.
-
 ## Documentation
 
 - **[Design Document](docs/design-document.md)** – Project description, user personas, user stories, and design mockups
 - **[MongoDB Local Setup](docs/mongodb-local-setup.md)** – Guide for setting up MongoDB locally
 - **[Deployment Guide](docs/deployment.md)** – Deploy to public server (Render + MongoDB Atlas)
+
+## Live Demo
+
+- **[Live App](https://focusflow-wj9l.onrender.com/)** – Try FocusFlow online (may take 30–60s to wake if idle)
+- **[Video Introduction](https://youtu.be/bPARGZR_Rmo)** – Watch on YouTube
+- **[Presentation Slides](https://docs.google.com/presentation/d/169rFNHRbr-YcOhKNMbjO1l5P7dhrfmGEFjYgDyFev2E/edit?slide=id.p1#slide=id.p1)** – Project overview
 
 ## Screenshots
 
@@ -149,16 +142,6 @@ To deploy FocusFlow to a public server, see **[Deployment Guide](docs/deployment
 - **Day Streak**: Consecutive days with at least one completed task.
 - **Weekly metrics**: Tasks completed and focus minutes this week.
 - **Charts**: Bar chart of tasks per weekday; completion by time of day (Morning, Afternoon, Evening).
-
-### Running Linter and Formatter
-
-```bash
-# Run ESLint
-npm run lint
-
-# Format code with Prettier
-npm run format
-```
 
 ## Technology Stack
 
